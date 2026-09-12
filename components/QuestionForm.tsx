@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { findSimilarQuestions, SimilarMatchResult } from '@/lib/searchUtils';
 import { generateRefinedGalvaData } from '@/lib/galvaAiEngine';
+import { applyGalvaTerminology } from '@/lib/terminologyReplacer';
 
 interface QuestionFormProps {
   onQuestionAdded: (newItem: QuestionQueueItem, newKnowledge?: KnowledgeRecord) => void;
@@ -194,7 +195,10 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
           for (let i = 0; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
           }
-          setRawText(baseTextBeforeRecordingRef.current + transcript);
+          const fullText = baseTextBeforeRecordingRef.current + transcript;
+          // 🎙️ 専門用語辞書で「酸洗い」→「酸洗」等の誤変換をリアルタイム補正！
+          const correctedText = applyGalvaTerminology(fullText);
+          setRawText(correctedText);
         };
 
         recognition.onerror = (e: any) => {
@@ -238,7 +242,10 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   // 1. AIで具体化と仮解説を生成し、確認プレビューを表示
   const handleRefineAndPreview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!rawText.trim() && imagePreviews.length === 0) return;
+    const cleanRawText = applyGalvaTerminology(rawText);
+    setRawText(cleanRawText);
+
+    if (!cleanRawText.trim() && imagePreviews.length === 0) return;
 
     if (isVoiceRecording && recognitionRef.current) {
       try {
@@ -398,6 +405,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
             <textarea
               value={rawText}
               onChange={(e) => setRawText(e.target.value)}
+              onBlur={() => setRawText(applyGalvaTerminology(rawText))}
               placeholder="マイクで話すか、殴り書き入力（例: パイプ端っこが黒ずんでる。酸洗やり直し？ジンクリッチ塗っていい？）"
               rows={2}
               className={`w-full text-xs bg-slate-900/90 border rounded-xl p-2.5 ${
