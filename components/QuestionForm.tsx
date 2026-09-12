@@ -53,6 +53,8 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
   } | null>(null);
 
   const recognitionRef = useRef<any>(null);
+  const isVoiceRecordingRef = useRef(false);
+  const baseTextBeforeRecordingRef = useRef('');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -74,6 +76,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
 
   useEffect(() => {
     return () => {
+      isVoiceRecordingRef.current = false;
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
@@ -156,19 +159,21 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // 🎙️ 三浦さん向け音声入力の開始・停止
+  // 🎙️ 三浦さん向け音声入力の開始・停止（息継ぎ・無音でも勝手に切れない自動継続機能付き）
   const toggleVoiceRecording = () => {
-    if (isVoiceRecording) {
+    if (isVoiceRecordingRef.current) {
+      // ユーザーが明示的に停止ボタンを押した場合
+      isVoiceRecordingRef.current = false;
+      setIsVoiceRecording(false);
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();
         } catch (e) {}
       }
-      setIsVoiceRecording(false);
     } else {
       setVoiceError(null);
       if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-        setVoiceError('ブラウザが音声認識に対応していません。');
+        setVoiceError('ブラウザが音声認識に対応していません。Chrome / Edge推奨です。');
         return;
       }
 
@@ -180,34 +185,51 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         recognition.continuous = true;
         recognition.interimResults = true;
 
-        const initialBaseText = rawText ? rawText + ' ' : '';
+        baseTextBeforeRecordingRef.current = rawText ? rawText.trim() + ' ' : '';
+        isVoiceRecordingRef.current = true;
+        setIsVoiceRecording(true);
 
         recognition.onresult = (event: any) => {
           let transcript = '';
-          for (let i = event.resultIndex; i < event.results.length; i++) {
+          for (let i = 0; i < event.results.length; i++) {
             transcript += event.results[i][0].transcript;
           }
-          setRawText(initialBaseText + transcript);
+          setRawText(baseTextBeforeRecordingRef.current + transcript);
         };
 
         recognition.onerror = (e: any) => {
           console.warn('Voice input error in QuestionForm:', e);
-          if (e.error !== 'no-speech') {
-            setVoiceError('マイクアクセスが拒否されたかエラーが発生しました。');
+          if (e.error === 'no-speech' || e.error === 'aborted') {
+            // 息継ぎや無音時はエラー扱いせず継続
+            return;
           }
-          setIsVoiceRecording(false);
+          if (e.error === 'not-allowed') {
+            setVoiceError('マイクのアクセス許可が拒否されました。');
+            isVoiceRecordingRef.current = false;
+            setIsVoiceRecording(false);
+          }
         };
 
         recognition.onend = () => {
-          setIsVoiceRecording(false);
+          // ユーザーが停止を押していない場合は息継ぎ・タイムアウトしても自動再開
+          if (isVoiceRecordingRef.current) {
+            baseTextBeforeRecordingRef.current = rawText ? rawText.trim() + ' ' : '';
+            try {
+              recognition.start();
+            } catch (err) {
+              // 既に稼働中の場合は無視
+            }
+          } else {
+            setIsVoiceRecording(false);
+          }
         };
 
         recognition.start();
         recognitionRef.current = recognition;
-        setIsVoiceRecording(true);
       } catch (err: any) {
         console.error('Failed to start speech recognition:', err);
         setVoiceError('音声認識を開始できませんでした。');
+        isVoiceRecordingRef.current = false;
         setIsVoiceRecording(false);
       }
     }
@@ -378,18 +400,40 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
               onChange={(e) => setRawText(e.target.value)}
               placeholder="マイクで話すか、殴り書き入力（例: パイプ端っこが黒ずんでる。酸洗やり直し？ジンクリッチ塗っていい？）"
               rows={2}
-              className={`w-full text-xs bg-slate-900/90 border rounded-xl p-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 resize-none transition-all leading-relaxed ${
+              className={`w-full text-xs bg-slate-900/90 border rounded-xl p-2.5 ${
+                rawText || isVoiceRecording ? 'pr-24' : 'pr-3'
+              } text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 resize-none transition-all leading-relaxed ${
                 isVoiceRecording
                   ? 'border-red-500 ring-2 ring-red-500/50 bg-red-950/20'
                   : 'border-slate-700/80 focus:ring-sky-500/50 focus:border-sky-500'
               }`}
             />
-            {isVoiceRecording && (
-              <div className="absolute right-2.5 top-2.5 flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-900/90 border border-red-500 text-[10px] text-red-200 animate-pulse">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
-                <span>認識中...</span>
-              </div>
-            )}
+
+            {/* 右上操作ボタン群（録音中バッジ ＆ ×全削除クリアボタン） */}
+            <div className="absolute right-2 top-2 flex items-center gap-1.5 z-10">
+              {isVoiceRecording && (
+                <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-900/90 border border-red-500 text-[10px] text-red-200 animate-pulse shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+                  <span>録音中（息継ぎOK）</span>
+                </div>
+              )}
+
+              {rawText && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRawText('');
+                    baseTextBeforeRecordingRef.current = '';
+                    setVoiceError(null);
+                  }}
+                  className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-slate-800/95 hover:bg-rose-900/90 border border-slate-700 hover:border-rose-500/60 text-slate-400 hover:text-rose-200 text-[10px] font-bold transition-all shadow-md active:scale-95 cursor-pointer"
+                  title="入力テキストを全削除して一からやり直す"
+                >
+                  <X className="w-3 h-3 text-rose-400" />
+                  <span>クリア</span>
+                </button>
+              )}
+            </div>
           </div>
 
           {/* 💡 類似質問・重複防止サジェスト表示 */}
