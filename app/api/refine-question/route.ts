@@ -8,7 +8,7 @@ import { generateRefinedGalvaData } from '@/lib/galvaAiEngine';
 
 export async function POST(req: NextRequest) {
   try {
-    const { rawText, categoryId, images } = await req.json();
+    const { rawText, categoryId, images, customApiKey, modelName } = await req.json();
 
     if (!rawText && (!images || images.length === 0)) {
       return NextResponse.json(
@@ -29,17 +29,22 @@ export async function POST(req: NextRequest) {
       actionCategory: string;
     } | null = null;
 
-    // 1. Gemini 1.5 Flash による質問具体化 ＆ AI標準仮解説 ＆ 現場要約の自動生成
-    const model = getGeminiModel(true);
-    if (model) {
+    // 1. 最上位Geminiモデル（Gemini 1.5 Pro / 2.0 Flash）による質問具体化 ＆ 仮解説自動生成
+    const modelsToTry = [modelName || 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    
+    for (const mName of modelsToTry) {
+      if (refinedData) break;
+      const model = getGeminiModel(true, mName, customApiKey);
+      if (!model) continue;
+
       try {
         const prompt = `
 ${GALVA_TERMINOLOGY_PROMPT}
 
 【タスク】
-溶融亜鉛めっき現場の品質管理担当者（三浦さん）が現場から入力した「殴り書きメモ・気になる事象」を受け取り、以下の全項目を構造化して生成してください：
+溶融亜鉛めっき現場の品質管理担当者（三浦さん）が現場から入力した「殴り書きメモ・気になる事象」を受け取り、以下の全項目を構造化して最高水準の工学的・冶金学的見地から生成してください：
 1. 大ベテラン職人（村上本部長）が即座に口頭回答しやすい具体的・論理的な技術質問文へのリライト
-2. 溶融亜鉛めっき規格（JIS H 8641）に基づく、AIによる標準理論・メカニズム・合否判定ライン・現場確認ポイントの【仮解説】
+2. 溶融亜鉛めっき規格（JIS H 8641 / HDZ規格）に基づく、AIによる標準理論（Fe-Zn合金層δ1, ζ, η相の拡散挙動、前処理薬品・浴温）・合否判定ライン・現場確認ポイントの【仮解説】
 3. 現場作業員向けの即断要約（OK/NG判定・今すぐやる処置・絶対やってはいけないNG行動）
 4. 不具合要因カテゴリと処置カテゴリの自動分類
 
@@ -97,7 +102,7 @@ ${GALVA_TERMINOLOGY_PROMPT}
           actionCategory: parsed.actionCategory || '手ケレン研磨',
         };
       } catch (geminiErr) {
-        console.warn('Gemini API call failed in refine-question, fallback to dynamic engine:', geminiErr);
+        console.warn(`Gemini API call failed with ${mName}:`, geminiErr);
       }
     }
 

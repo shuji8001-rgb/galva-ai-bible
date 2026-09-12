@@ -231,6 +231,9 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
       let createdKnowledge: KnowledgeRecord | undefined = undefined;
 
       try {
+        const storedKey = typeof window !== 'undefined' ? localStorage.getItem('galva_gemini_api_key') || undefined : undefined;
+        const storedModel = typeof window !== 'undefined' ? localStorage.getItem('galva_gemini_model') || 'gemini-1.5-pro' : 'gemini-1.5-pro';
+
         const response = await fetch('/api/refine-question', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -238,6 +241,8 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
             rawText: rawText.trim(),
             categoryId: selectedCat === 'AUTO' ? undefined : selectedCat,
             images: imagePreviews,
+            customApiKey: storedKey,
+            modelName: storedModel,
           }),
         });
 
