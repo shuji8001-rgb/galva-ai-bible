@@ -21,6 +21,7 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { findSimilarQuestions, SimilarMatchResult } from '@/lib/searchUtils';
+import { generateRefinedGalvaData } from '@/lib/galvaAiEngine';
 
 interface QuestionFormProps {
   onQuestionAdded: (newItem: QuestionQueueItem, newKnowledge?: KnowledgeRecord) => void;
@@ -255,15 +256,7 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
       // クライアント側スマートフォールバック（API失敗時・オフライン時）
       if (!createdQuestion) {
         const text = rawText.trim();
-        let cat: CategoryId = selectedCat === 'AUTO' ? 'CAT-1' : selectedCat;
-        if (selectedCat === 'AUTO') {
-          if (text.includes('黒ずみ') || text.includes('不めっき') || text.includes('酸洗') || text.includes('油')) cat = 'CAT-1';
-          else if (text.includes('ドロス') || text.includes('灰') || text.includes('ザラつき')) cat = 'CAT-2';
-          else if (text.includes('タレ') || text.includes('ツララ') || text.includes('バリ') || text.includes('溜まり')) cat = 'CAT-3';
-          else if (text.includes('白サビ') || text.includes('白さび') || text.includes('雨') || text.includes('保管')) cat = 'CAT-4';
-          else if (text.includes('穴') || text.includes('爆発') || text.includes('密閉') || text.includes('パイプ')) cat = 'CAT-5';
-          else if (text.includes('ヤケ') || text.includes('灰色') || text.includes('膜厚') || text.includes('歪み')) cat = 'CAT-6';
-        }
+        const refined = generateRefinedGalvaData(text, selectedCat === 'AUTO' ? undefined : selectedCat);
 
         const maxNo = questions.reduce((max, q) => Math.max(max, q.no || 0), 0);
         const newNo = maxNo + 1;
@@ -272,45 +265,38 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
         createdQuestion = {
           id: newId,
           no: newNo,
-          category_id: cat,
-          title: text.length > 30 ? text.substring(0, 30) + '...' : (text || 'めっき現場相談メモ'),
-          refined_question: `【現場状況】\n${text || '現場でのめっき外観・作業相談'}\n\n【確認事項】\n適切な前処理および修正方法、JIS H 8641規格への適合判定`,
+          category_id: refined.detectedCategory,
+          title: refined.title,
+          refined_question: refined.refinedQuestion,
           raw_text: text,
           images: imagePreviews,
           created_at: new Date().toISOString(),
           is_answered: true,
           has_voice_answer: false,
           source_type: 'user',
-          suggested_criteria: 'JIS H 8641（溶融亜鉛めっき）技術規格基準',
-          key_check_points: ['素地表面状態', '膜厚測定値', '母材密着性'],
-          ai_standard_answer: {
-            theory: `【標準技術理論】\n${text}に関して、溶融亜鉛めっき（JIS H 8641）の標準仕様に基づき、不めっき要因の除去または適切な後処理が必要です。\n\n【推奨処置】\n素地調整を入念に行い、必要に応じて再酸洗または高濃度亜鉛末塗料（JIS K 5553）によるタッチアップを実施してください。`,
-            standard_criteria: 'JIS H 8641 外観基準（不めっき、過大なタレ・ドロス付着のないこと）',
-            points_to_check: ['素地表面状態', '膜厚測定値', '母材密着性'],
-          },
-          worker_summary: {
-            verdict_ok_ng: '判定要注意（膜厚測定要）',
-            summary_phenomenon: text.substring(0, 25) || 'めっき外観・品質の確認',
-            immediate_action: '該当箇所の素地状態を確認し、膜厚計で規格値を確認。手直し要否を職長に報告する。',
-            forbidden_action: '自己判断で不適切なタッチアップ塗料を塗布したり、そのまま出荷しないこと。',
-          },
+          suggested_criteria: refined.suggestedCriteria,
+          key_check_points: refined.keyCheckPoints,
+          ai_standard_answer: refined.aiStandardAnswer,
+          worker_summary: refined.workerSummary,
+          cause_category: refined.causeCategory,
+          action_category: refined.actionCategory,
         };
 
         createdKnowledge = {
           id: `k-local-${Date.now()}`,
           question_id: newId,
-          category_id: cat,
-          question_title: createdQuestion.title,
+          category_id: refined.detectedCategory,
+          question_title: refined.title,
           original_question: text,
-          full_transcript: createdQuestion.ai_standard_answer?.theory || '',
-          phenomenon: text,
-          cause: '素地状態・浸漬条件または保管環境に起因する現象',
-          action_and_criteria: 'JIS H 8641 規格値に基づく適切な是正処置',
-          prevention: '前処理ラインの管理徹底および浸漬・引上げ速度の最適化',
-          key_terminology: ['JIS H 8641', '膜厚管理', '溶融亜鉛めっき'],
-          cause_category: '前処理薬品・洗浄',
-          action_category: '酸洗・前処理手直し',
-          worker_summary: createdQuestion.worker_summary,
+          full_transcript: refined.aiStandardAnswer.theory || '',
+          phenomenon: `【現場確認事象】：${refined.title}`,
+          cause: `【推定原因】：${refined.aiStandardAnswer.theory}`,
+          action_and_criteria: `【推奨合否基準・手直し】：\n${refined.aiStandardAnswer.standard_criteria}`,
+          prevention: `【推奨再発防止策】：\n1. 現場確認ポイント（${refined.keyCheckPoints.join('、')}）の日常点検徹底`,
+          key_terminology: [refined.title.slice(0, 8), 'JIS H 8641', '溶融亜鉛めっき'],
+          cause_category: refined.causeCategory,
+          action_category: refined.actionCategory,
+          worker_summary: refined.workerSummary,
           has_voice_answer: false,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),

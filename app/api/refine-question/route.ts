@@ -4,6 +4,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { GALVA_TERMINOLOGY_PROMPT } from '@/constants/terminology';
 import { CategoryId, QuestionQueueItem, KnowledgeRecord, AiStandardAnswer, WorkerSummary } from '@/types';
 
+import { generateRefinedGalvaData } from '@/lib/galvaAiEngine';
+
 export async function POST(req: NextRequest) {
   try {
     const { rawText, categoryId, images } = await req.json();
@@ -47,7 +49,7 @@ ${GALVA_TERMINOLOGY_PROMPT}
 "${categoryId || '自動判定'}"
 
 【出力JSONスキーマ】
-以下のJSONフォーマットで厳密に返答してください。
+マークダウン装飾なしで、以下のJSONフォーマットで厳密に返答してください。
 {
   "title": "簡潔で要点が伝わる質問タイトル（35文字以内）",
   "refinedQuestion": "ベテラン職人が回答しやすい具体的な状況・問いかけ文（100〜150文字程度）",
@@ -64,8 +66,10 @@ ${GALVA_TERMINOLOGY_PROMPT}
 }
 `;
         const result = await model.generateContent(prompt);
-        const text = result.response.text();
-        const parsed = JSON.parse(text);
+        const text = result.response.text().trim();
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        const cleanedJson = jsonMatch ? jsonMatch[0] : text;
+        const parsed = JSON.parse(cleanedJson);
 
         const detectedCat = (parsed.detectedCategory as CategoryId) || categoryId || 'CAT-4';
         const aiAnswer: AiStandardAnswer = {
@@ -93,70 +97,13 @@ ${GALVA_TERMINOLOGY_PROMPT}
           actionCategory: parsed.actionCategory || '手ケレン研磨',
         };
       } catch (geminiErr) {
-        console.warn('Gemini API call failed in refine-question, fallback:', geminiErr);
+        console.warn('Gemini API call failed in refine-question, fallback to dynamic engine:', geminiErr);
       }
     }
 
-    // フォールバック（スマート自動生成）
+    // 2. 高精度ドメイン推論エンジンによる動的フォールバック
     if (!refinedData) {
-      const detectedCat = (categoryId || determineCategory(rawText)) as CategoryId;
-      const clean = (rawText || '現場確認事象').trim();
-      const shortTitle = clean.length > 28 ? clean.slice(0, 28) + '…' : clean;
-
-      let verdict: WorkerSummary['verdict_ok_ng'] = 'NG（手直し必須）';
-      let causeCat = '鋼材成分・溶接異物';
-      let actionCat = '手ケレン研磨';
-
-      if (detectedCat === 'CAT-1') {
-        causeCat = '前処理薬品・洗浄';
-        actionCat = '酸洗・前処理手直し';
-        verdict = clean.includes('錆') ? '判定要注意（膜厚測定要）' : 'NG（手直し必須）';
-      } else if (detectedCat === 'CAT-2') {
-        causeCat = '温度・浸漬操作';
-        actionCat = '工程・温度管理';
-        verdict = clean.includes('ヤケ') ? 'OK（合格/許容）' : '判定要注意（膜厚測定要）';
-      } else if (detectedCat === 'CAT-3') {
-        causeCat = '冷却・保管環境';
-        actionCat = '保管改善・防錆処理';
-        verdict = clean.includes('白サビ') ? 'OK（合格/許容）' : '判定要注意（膜厚測定要）';
-      } else if (detectedCat === 'CAT-5') {
-        causeCat = '構造設計・開口孔';
-        actionCat = '追加開口・加熱矯正';
-        verdict = (clean.includes('爆発') || clean.includes('穴') || clean.includes('密閉')) ? '危険（作業即停止）' : 'NG（手直し必須）';
-      } else if (detectedCat === 'CAT-6') {
-        causeCat = '測定手法・規格判定';
-        actionCat = '規格再検査・証明書発行';
-        verdict = '判定要注意（膜厚測定要）';
-      }
-
-      const aiAnswer: AiStandardAnswer = {
-        theory: `鋼材表面の清浄度、前処理（脱脂・酸洗・フラックス）、または浸漬時の浴温・引き上げ速度、鋼材成分（Si含有量等）によるFe-Zn合金層の反応挙動。`,
-        standard_criteria: `JIS H 8641規格に基づき、軽微な欠陥（10cm2以下・全表面積0.5%以下）は規定ジンクリッチペイント（JIS K 5553）でタッチアップ補修。密着不良・大面積は酸剥離再めっき。`,
-        points_to_check: [
-          '欠陥の発生位置・範囲および母材表面状態の確認',
-          '前処理（脱脂・酸洗・フラックス）または浴温・浸漬条件との因果関係',
-          '客先仕様・JIS規格上の許容範囲（タッチアップ可否または再めっき）の確認',
-        ],
-      };
-
-      const workerSummary: WorkerSummary = {
-        summary_phenomenon: `${shortTitle}に関する現場事象`,
-        verdict_ok_ng: verdict,
-        immediate_action: '① 欠陥の状態・範囲を目視確認\n② JIS手直し基準（ジンクリッチまたはケレン）に沿って処置\n③ 迷ったら品管（三浦）または本部長へ即報告',
-        forbidden_action: '自己判断で放置すること、規格外の補修スプレーで誤魔化すこと',
-      };
-
-      refinedData = {
-        title: `【品管確認】${shortTitle}の要因と手直し基準`,
-        refinedQuestion: `現場にて「${clean}」が確認されました。溶融亜鉛めっき規格（JIS H 8641）に基づき、発生メカニズム、許容限界（合否判定ライン）、および現場での具体的な手直し・是正手順について教えてください。`,
-        detectedCategory: detectedCat,
-        aiStandardAnswer: aiAnswer,
-        keyCheckPoints: aiAnswer.points_to_check || ['素地表面状態', '膜厚測定値', '母材密着性'],
-        suggestedCriteria: aiAnswer.standard_criteria,
-        workerSummary: workerSummary,
-        causeCategory: causeCat,
-        actionCategory: actionCat,
-      };
+      refinedData = generateRefinedGalvaData(rawText, categoryId);
     }
 
     const timestamp = Date.now();
