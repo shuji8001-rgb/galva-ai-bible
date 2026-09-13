@@ -6,30 +6,188 @@
 
 :root {
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-main: #0f172a;
-  --surface-header: #1e293b;
-  --surface-card: #1e293b;
-  --surface-card-hover: #334155;
-  --surface-input: #0f172a;
-  --border-color: #38bdf8;
-  --border-subtle: #334155;
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --accent-color: #38bdf8;
-  --accent-light: #7dd3fc;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #0284c7 100%);
+  --bg-main: #f8fafc;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #f1f5f9;
+  --surface-input: #ffffff;
+  --border-color: #0284c7;
+  --border-subtle: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-heading: #0f172a;
+  --accent-color: #0284c7;
+  --accent-light: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #0f172a 0%, #0284c7 50%, #0369a1 100%);
   --btn-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   --btn-text: #ffffff;
-  --badge-bg: rgba(56, 189, 248, 0.15);
-  --badge-border: rgba(56, 189, 248, 0.4);
-  --badge-text: #38bdf8;
-  --glow-color: rgba(56, 189, 248, 0.25);
+  --badge-bg: #e0f2fe;
+  --badge-border: #bae6fd;
+  --badge-text: #0369a1;
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --glow-color: rgba(2, 132, 199, 0.15);
 }
 
 /* ==========================================================================
-   🪙 1. ジンク・チタンシルバー (Zinc & Titanium: 明るめメタル＆スカイブルー)
+   ☀️ 1. ピュア・スノーホワイト (最高輝度・純白 #ffffff 背景)
    ========================================================================== */
-html.theme-zinc, body.theme-zinc {
+html.theme-light-snow, body.theme-light-snow {
+  --bg-main: #ffffff;
+  --surface-header: #ffffff;
+  --surface-card: #f8fafc;
+  --surface-card-hover: #f1f5f9;
+  --surface-input: #ffffff;
+  --border-color: #0284c7;
+  --border-subtle: #e2e8f0;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-heading: #0f172a;
+  --accent-color: #0284c7;
+  --accent-light: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #0f172a 0%, #0284c7 50%, #0369a1 100%);
+  --btn-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #e0f2fe;
+  --badge-border: #bae6fd;
+  --badge-text: #0369a1;
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+  --glow-color: rgba(2, 132, 199, 0.12);
+}
+
+/* ==========================================================================
+   💎 2. クリスタル・アイスブルー (淡い澄み切った青白 #f0f9ff 背景)
+   ========================================================================== */
+html.theme-light-crystal, body.theme-light-crystal {
+  --bg-main: #f0f9ff;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #e0f2fe;
+  --surface-input: #ffffff;
+  --border-color: #0284c7;
+  --border-subtle: #bae6fd;
+  --text-main: #0c4a6e;
+  --text-muted: #0369a1;
+  --text-heading: #082f49;
+  --accent-color: #0284c7;
+  --accent-light: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #082f49 0%, #0284c7 50%, #38bdf8 100%);
+  --btn-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #e0f2fe;
+  --badge-border: #7dd3fc;
+  --badge-text: #0369a1;
+  --card-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.08);
+  --glow-color: rgba(2, 132, 199, 0.15);
+}
+
+/* ==========================================================================
+   🏛️ 3. プラチナ・シルバー (明るいチタン＆上品グレー #f8fafc 背景)
+   ========================================================================== */
+html.theme-light-platinum, body.theme-light-platinum {
+  --bg-main: #f8fafc;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #f1f5f9;
+  --surface-input: #ffffff;
+  --border-color: #475569;
+  --border-subtle: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-heading: #0f172a;
+  --accent-color: #334155;
+  --accent-light: #64748b;
+  --accent-gradient: linear-gradient(135deg, #0f172a 0%, #334155 50%, #64748b 100%);
+  --btn-gradient: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #e2e8f0;
+  --badge-border: #cbd5e1;
+  --badge-text: #1e293b;
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.07);
+  --glow-color: rgba(71, 85, 105, 0.15);
+}
+
+/* ==========================================================================
+   🌿 4. フレッシュ・ミント (爽やか安全グリーン #f0fdf4 背景)
+   ========================================================================== */
+html.theme-light-emerald, body.theme-light-emerald {
+  --bg-main: #f0fdf4;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #dcfce7;
+  --surface-input: #ffffff;
+  --border-color: #059669;
+  --border-subtle: #bbf7d0;
+  --text-main: #064e3b;
+  --text-muted: #047857;
+  --text-heading: #064e3b;
+  --accent-color: #059669;
+  --accent-light: #10b981;
+  --accent-gradient: linear-gradient(135deg, #064e3b 0%, #059669 50%, #10b981 100%);
+  --btn-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #dcfce7;
+  --badge-border: #86efac;
+  --badge-text: #065f46;
+  --card-shadow: 0 4px 20px -2px rgba(5, 150, 105, 0.08);
+  --glow-color: rgba(5, 150, 105, 0.15);
+}
+
+/* ==========================================================================
+   🌸 5. サクラ・ブロッサム (柔らかな明るいローズ #fff1f2 背景)
+   ========================================================================== */
+html.theme-light-sakura, body.theme-light-sakura {
+  --bg-main: #fff1f2;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #ffe4e6;
+  --surface-input: #ffffff;
+  --border-color: #e11d48;
+  --border-subtle: #fecdd3;
+  --text-main: #881337;
+  --text-muted: #be123c;
+  --text-heading: #4c0519;
+  --accent-color: #e11d48;
+  --accent-light: #fb7185;
+  --accent-gradient: linear-gradient(135deg, #881337 0%, #e11d48 50%, #f43f5e 100%);
+  --btn-gradient: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #ffe4e6;
+  --badge-border: #fda4af;
+  --badge-text: #9f1239;
+  --card-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.08);
+  --glow-color: rgba(225, 29, 72, 0.15);
+}
+
+/* ==========================================================================
+   🏖️ 6. ウォーム・バニラ (目に優しい明るいクリーム #fffbeb 背景)
+   ========================================================================== */
+html.theme-light-amber, body.theme-light-amber {
+  --bg-main: #fffbeb;
+  --surface-header: #ffffff;
+  --surface-card: #ffffff;
+  --surface-card-hover: #fef3c7;
+  --surface-input: #ffffff;
+  --border-color: #d97706;
+  --border-subtle: #fde68a;
+  --text-main: #451a03;
+  --text-muted: #92400e;
+  --text-heading: #451a03;
+  --accent-color: #d97706;
+  --accent-light: #f59e0b;
+  --accent-gradient: linear-gradient(135deg, #451a03 0%, #d97706 50%, #f59e0b 100%);
+  --btn-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  --btn-text: #ffffff;
+  --badge-bg: #fef3c7;
+  --badge-border: #fcd34d;
+  --badge-text: #92400e;
+  --card-shadow: 0 4px 20px -2px rgba(217, 119, 6, 0.08);
+  --glow-color: rgba(217, 119, 6, 0.15);
+}
+
+/* ==========================================================================
+   🌌 7. ダーク・チタン (夜間用ダークモード)
+   ========================================================================== */
+html.theme-dark-zinc, body.theme-dark-zinc {
   --bg-main: #0f172a;
   --surface-header: #1e293b;
   --surface-card: #1e293b;
@@ -39,6 +197,7 @@ html.theme-zinc, body.theme-zinc {
   --border-subtle: #334155;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
+  --text-heading: #f8fafc;
   --accent-color: #38bdf8;
   --accent-light: #7dd3fc;
   --accent-gradient: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #0284c7 100%);
@@ -47,107 +206,12 @@ html.theme-zinc, body.theme-zinc {
   --badge-bg: rgba(56, 189, 248, 0.18);
   --badge-border: rgba(56, 189, 248, 0.45);
   --badge-text: #38bdf8;
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
   --glow-color: rgba(56, 189, 248, 0.25);
 }
 
 /* ==========================================================================
-   🌊 2. ディープ・オーシャンシアン (Cyan & Ocean: 鮮明シアン＆サファイア)
-   ========================================================================== */
-html.theme-cyan, body.theme-cyan {
-  --bg-main: #081d33;
-  --surface-header: #0f2d4e;
-  --surface-card: #10345b;
-  --surface-card-hover: #164679;
-  --surface-input: #07192c;
-  --border-color: #06b6d4;
-  --border-subtle: #194877;
-  --text-main: #ffffff;
-  --text-muted: #93c5fd;
-  --accent-color: #22d3ee;
-  --accent-light: #67e8f9;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #22d3ee 50%, #0891b2 100%);
-  --btn-gradient: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
-  --btn-text: #ffffff;
-  --badge-bg: rgba(6, 182, 212, 0.2);
-  --badge-border: rgba(6, 182, 212, 0.5);
-  --badge-text: #22d3ee;
-  --glow-color: rgba(6, 182, 212, 0.3);
-}
-
-/* ==========================================================================
-   ⚡ 3. インダストリアル・ゴールドアンバー (Amber & Warm Zinc: 黄金アンバー＆ウォーム)
-   ========================================================================== */
-html.theme-amber, body.theme-amber {
-  --bg-main: #181512;
-  --surface-header: #26211c;
-  --surface-card: #2e2822;
-  --surface-card-hover: #3d352e;
-  --surface-input: #14110e;
-  --border-color: #f59e0b;
-  --border-subtle: #453c33;
-  --text-main: #fffbeb;
-  --text-muted: #d6cfb8;
-  --accent-color: #fbbf24;
-  --accent-light: #fde68a;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #fbbf24 60%, #d97706 100%);
-  --btn-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
-  --btn-text: #ffffff;
-  --badge-bg: rgba(245, 158, 11, 0.2);
-  --badge-border: rgba(245, 158, 11, 0.5);
-  --badge-text: #fbbf24;
-  --glow-color: rgba(245, 158, 11, 0.3);
-}
-
-/* ==========================================================================
-   🌲 4. フォレスト・ミントエメラルド (Emerald & Mint: 爽快ミント＆JISグリーン)
-   ========================================================================== */
-html.theme-emerald, body.theme-emerald {
-  --bg-main: #0a1f16;
-  --surface-header: #113324;
-  --surface-card: #153e2c;
-  --surface-card-hover: #1c523b;
-  --surface-input: #081a12;
-  --border-color: #10b981;
-  --border-subtle: #1f563d;
-  --text-main: #f0fdf4;
-  --text-muted: #a7f3d0;
-  --accent-color: #34d399;
-  --accent-light: #6ee7b7;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #34d399 60%, #059669 100%);
-  --btn-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
-  --btn-text: #ffffff;
-  --badge-bg: rgba(16, 185, 129, 0.2);
-  --badge-border: rgba(16, 185, 129, 0.5);
-  --badge-text: #34d399;
-  --glow-color: rgba(16, 185, 129, 0.3);
-}
-
-/* ==========================================================================
-   🏛️ 5. プラチナ・モノトーン (Platinum & Graphite: 明るめプラチナ＆純白)
-   ========================================================================== */
-html.theme-monochrome, body.theme-monochrome {
-  --bg-main: #141416;
-  --surface-header: #202024;
-  --surface-card: #27272c;
-  --surface-card-hover: #35353c;
-  --surface-input: #101012;
-  --border-color: #e4e4e7;
-  --border-subtle: #3f3f46;
-  --text-main: #ffffff;
-  --text-muted: #d4d4d8;
-  --accent-color: #ffffff;
-  --accent-light: #f4f4f5;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #e4e4e7 60%, #a1a1aa 100%);
-  --btn-gradient: linear-gradient(135deg, #52525b 0%, #3f3f46 100%);
-  --btn-text: #ffffff;
-  --badge-bg: rgba(255, 255, 255, 0.18);
-  --badge-border: rgba(255, 255, 255, 0.4);
-  --badge-text: #ffffff;
-  --glow-color: rgba(255, 255, 255, 0.25);
-}
-
-/* ==========================================================================
-   全要素への強制スタイル適用（背景・カード・線・ボタン・文字・バッジ）
+   全要素への強制スタイル適用（明るい背景・カード・文字・線・ボタン）
    ========================================================================== */
 
 body {
@@ -162,6 +226,7 @@ body {
 header {
   background-color: var(--surface-header) !important;
   border-color: var(--border-subtle) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
 }
 
 /* カード & パネル */
@@ -178,14 +243,15 @@ section .rounded-xl,
   background-color: var(--surface-card) !important;
   border-color: var(--border-subtle) !important;
   color: var(--text-main) !important;
-  transition: background-color 0.25s ease, border-color 0.25s ease;
+  box-shadow: var(--card-shadow) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .glass-card-hover:hover {
   background-color: var(--surface-card-hover) !important;
   border-color: var(--border-color) !important;
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.4), 0 0 20px -2px var(--glow-color) !important;
+  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.12), 0 0 15px -2px var(--glow-color) !important;
 }
 
 /* 入力エリア・検索ボックス・セレクト */
@@ -215,7 +281,12 @@ input:focus, textarea:focus {
   border-color: var(--border-subtle) !important;
 }
 
-/* アクセントテキスト（シアン系・キーテキスト） */
+/* 見出し文字 */
+h1, h2, h3, h4, .font-extrabold, .font-bold {
+  color: var(--text-heading);
+}
+
+/* アクセントテキスト */
 .text-cyan-400,
 .text-cyan-300,
 .text-cyan-500,
@@ -226,6 +297,10 @@ input:focus, textarea:focus {
 .text-slate-400,
 .text-slate-300 {
   color: var(--text-muted) !important;
+}
+
+.text-white {
+  color: var(--text-main) !important;
 }
 
 /* バッジ・タグ */
@@ -261,7 +336,7 @@ input:focus, textarea:focus {
 }
 
 .zinc-glow {
-  box-shadow: 0 0 35px var(--glow-color) !important;
+  box-shadow: 0 0 30px var(--glow-color) !important;
 }
 
 /* スクロールバー */
@@ -270,7 +345,7 @@ input:focus, textarea:focus {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--surface-input);
+  background: var(--bg-main);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border-subtle);

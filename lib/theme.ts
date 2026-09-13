@@ -1,9 +1,17 @@
-export type ColorThemeId = 'zinc' | 'cyan' | 'amber' | 'emerald' | 'monochrome';
+export type ColorThemeId = 
+  | 'light-snow' 
+  | 'light-crystal' 
+  | 'light-platinum' 
+  | 'light-emerald' 
+  | 'light-sakura' 
+  | 'light-amber' 
+  | 'dark-zinc';
 
 export interface ColorTheme {
   id: ColorThemeId;
   name: string;
   badge: string;
+  isLight: boolean;
   description: string;
   previewColors: {
     bg: string;
@@ -15,63 +23,94 @@ export interface ColorTheme {
 
 export const COLOR_THEMES: ColorTheme[] = [
   {
-    id: 'zinc',
-    name: 'ジンク・メタルシルバー',
-    badge: 'ガルバ推奨',
-    description: '溶融亜鉛の金属光沢とスパングルを表現。銀灰色とスカイブルーの洗練された濃淡。',
+    id: 'light-snow',
+    name: '☀️ ピュア・スノーホワイト (最高輝度・真っ白)',
+    badge: '超明色・推奨',
+    isLight: true,
+    description: '純白の背景とクリアな青。最も明るくクリーンで、直射日光下やオフィスでも圧倒的な視認性。',
     previewColors: {
-      bg: '#090d16',
-      surface: '#131b2e',
-      primary: '#38bdf8',
-      accent: '#94a3b8',
-    },
-  },
-  {
-    id: 'cyan',
-    name: 'ディープ・シアン',
-    badge: '知性・品管',
-    description: '深海の漆黒ネイビーと氷光シアン。コントラストが高く視認性に優れた濃淡パレット。',
-    previewColors: {
-      bg: '#04101d',
-      surface: '#0c1e33',
-      primary: '#06b6d4',
+      bg: '#ffffff',
+      surface: '#f8fafc',
+      primary: '#0284c7',
       accent: '#38bdf8',
     },
   },
   {
-    id: 'amber',
-    name: 'インダストリアル・アンバー',
-    badge: '現場・熱量',
-    description: '亜鉛浴の熱量と工場の安全灯。漆黒カーボンと温かみある琥珀色の重厚な濃淡。',
+    id: 'light-crystal',
+    name: '💎 クリスタル・アイスブルー (爽快な明るい青白)',
+    badge: '透明感',
+    isLight: true,
+    description: '澄み渡る氷のような淡いスカイブルーと純白。爽やかさと清潔感を極めた明るいデザイン。',
     previewColors: {
-      bg: '#0c0a09',
-      surface: '#1c1917',
-      primary: '#f59e0b',
-      accent: '#fbbf24',
+      bg: '#f0f9ff',
+      surface: '#ffffff',
+      primary: '#0284c7',
+      accent: '#0ea5e9',
     },
   },
   {
-    id: 'emerald',
-    name: 'フォレスト・エメラルド',
-    badge: 'JIS・品質',
-    description: '深緑のダークスレートと鮮やかなエメラルド。落ち着きと信頼感を醸し出す濃淡。',
+    id: 'light-platinum',
+    name: '🏛️ プラチナ・シルバー (明るい金属光沢)',
+    badge: '高級感',
+    isLight: true,
+    description: 'めっき鋼材の品格漂うプラチナシルバーと白。落ち着きとコントラストを両立した明るいグレー。',
     previewColors: {
-      bg: '#05130d',
-      surface: '#0f241a',
-      primary: '#10b981',
-      accent: '#34d399',
+      bg: '#f8fafc',
+      surface: '#ffffff',
+      primary: '#334155',
+      accent: '#64748b',
     },
   },
   {
-    id: 'monochrome',
-    name: 'オブシディアン・モノトーン',
-    badge: '極上ミニマル',
-    description: '色数を極限まで絞り込み、黒・白・プラチナ灰の濃淡のみで構成された極致スタイル。',
+    id: 'light-emerald',
+    name: '🌿 フレッシュ・ミント (爽やか安全グリーン)',
+    badge: 'JIS・安全',
+    isLight: true,
+    description: '柔らかなミントホワイトと鮮快なエメラルドグリーン。安全・安心を意識した明るいスタイル。',
     previewColors: {
-      bg: '#000000',
-      surface: '#121212',
-      primary: '#ffffff',
-      accent: '#a1a1aa',
+      bg: '#f0fdf4',
+      surface: '#ffffff',
+      primary: '#059669',
+      accent: '#10b981',
+    },
+  },
+  {
+    id: 'light-sakura',
+    name: '🌸 サクラ・ブロッサム (柔らかな明るいローズ)',
+    badge: '華やか',
+    isLight: true,
+    description: 'ほんのり淡いサクラホワイトとローズピンク。温かく親しみやすい明るいトーン。',
+    previewColors: {
+      bg: '#fff1f2',
+      surface: '#ffffff',
+      primary: '#e11d48',
+      accent: '#f43f5e',
+    },
+  },
+  {
+    id: 'light-amber',
+    name: '🏖️ ウォーム・バニラ (目に優しい明るいクリーム)',
+    badge: '温かみ',
+    isLight: true,
+    description: '温もりあるバニラアイボリーと上品なアンバーゴールド。長時間見ても疲れない上質な明るさ。',
+    previewColors: {
+      bg: '#fffbeb',
+      surface: '#ffffff',
+      primary: '#d97706',
+      accent: '#f59e0b',
+    },
+  },
+  {
+    id: 'dark-zinc',
+    name: '🌌 ダーク・チタン (夜間・コントラスト)',
+    badge: '夜間用',
+    isLight: false,
+    description: '夜間作業や眩しさを抑えたい時のディープチタン＆ネイビー。',
+    previewColors: {
+      bg: '#0f172a',
+      surface: '#1e293b',
+      primary: '#38bdf8',
+      accent: '#0284c7',
     },
   },
 ];
@@ -79,9 +118,9 @@ export const COLOR_THEMES: ColorTheme[] = [
 const STORAGE_KEY = 'galva_color_theme';
 
 export function getStoredTheme(): ColorThemeId {
-  if (typeof window === 'undefined') return 'zinc';
+  if (typeof window === 'undefined') return 'light-snow';
   const saved = localStorage.getItem(STORAGE_KEY) as ColorThemeId;
-  return saved && COLOR_THEMES.some((t) => t.id === saved) ? saved : 'zinc';
+  return saved && COLOR_THEMES.some((t) => t.id === saved) ? saved : 'light-snow';
 }
 
 export function setStoredTheme(themeId: ColorThemeId): void {

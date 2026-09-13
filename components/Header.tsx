@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenManual,
 }) => {
   const [isAiSettingsOpen, setIsAiSettingsOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<ColorThemeId>('zinc');
+  const [currentTheme, setCurrentTheme] = useState<ColorThemeId>('light-snow');
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
 
   const voiceAnsweredCount = questions.filter((q) => q.has_voice_answer).length;
@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
                     JIS H 8641
                   </span>
                 </div>
-                <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
+                <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-[var(--text-heading)] flex items-center gap-1.5">
                   <span className="galva-gradient-text">
                     溶融亜鉛めっき「技術伝承AIバイブル」
                   </span>
@@ -285,10 +285,10 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="xl:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-xs rounded-2xl bg-[var(--surface-card)] border-2 border-[var(--border-color)] p-4 shadow-2xl">
             <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border-subtle)]">
-              <span className="text-xs font-bold text-white">🎨 カラースタイル選択</span>
+              <span className="text-xs font-bold text-[var(--text-heading)]">🎨 カラースタイル選択</span>
               <button
                 onClick={() => setIsThemeMenuOpen(false)}
-                className="text-xs text-[var(--text-muted)]"
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]"
               >
                 ✕ 閉じる
               </button>
@@ -301,7 +301,7 @@ export const Header: React.FC<HeaderProps> = ({
                   className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold ${
                     currentTheme === t.id
                       ? 'bg-[var(--badge-bg)] text-[var(--accent-color)] border border-[var(--border-color)]'
-                      : 'text-white bg-[var(--surface-input)]'
+                      : 'text-[var(--text-main)] bg-[var(--surface-input)] hover:bg-[var(--surface-card-hover)]'
                   }`}
                 >
                   <div className="flex items-center gap-2">
