@@ -134,12 +134,18 @@ export function applyThemeToDOM(themeId: ColorThemeId): void {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
   const body = document.body;
-  // 以前のテーマクラスを削除
+  // 以前のテーマクラスおよびdarkクラスを削除
+  root.classList.remove('dark');
+  if (body) body.classList.remove('dark');
   COLOR_THEMES.forEach((t) => {
     root.classList.remove(`theme-${t.id}`);
     if (body) body.classList.remove(`theme-${t.id}`);
   });
-  // 新テーマクラスを適用
+  // 新しいテーマクラスを付与
   root.classList.add(`theme-${themeId}`);
   if (body) body.classList.add(`theme-${themeId}`);
+  if (!COLOR_THEMES.find((t) => t.id === themeId)?.isLight) {
+    root.classList.add('dark');
+    if (body) body.classList.add('dark');
+  }
 }
