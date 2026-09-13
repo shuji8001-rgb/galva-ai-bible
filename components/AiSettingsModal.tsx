@@ -12,7 +12,7 @@ interface AiSettingsModalProps {
 export const AiSettingsModal: React.FC<AiSettingsModalProps> = ({ isOpen, onClose }) => {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('gemini-1.5-pro');
-  const [selectedTheme, setSelectedTheme] = useState<ColorThemeId>('light-snow');
+  const [selectedTheme, setSelectedTheme] = useState<ColorThemeId>('modern-galva');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   useEffect(() => {

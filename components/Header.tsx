@@ -38,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenManual,
 }) => {
   const [isAiSettingsOpen, setIsAiSettingsOpen] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<ColorThemeId>('light-snow');
+  const [currentTheme, setCurrentTheme] = useState<ColorThemeId>('modern-galva');
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
 
   const voiceAnsweredCount = questions.filter((q) => q.has_voice_answer).length;
@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
                     JIS H 8641
                   </span>
                 </div>
-                <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-[var(--text-heading)] flex items-center gap-1.5">
+                <h1 className="text-sm sm:text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
                   <span className="galva-gradient-text">
                     溶融亜鉛めっき「技術伝承AIバイブル」
                   </span>
@@ -129,13 +129,13 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* 中央：🌟 3大ナビゲーションタブ */}
-          <div className="flex items-center justify-between sm:justify-center bg-[var(--surface-input)] p-1 rounded-xl border border-[var(--border-subtle)] text-xs shadow-inner shrink-0">
+          <div className="flex items-center justify-between sm:justify-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 text-xs shadow-inner shrink-0">
             <button
               onClick={() => onChangeView('BIBLE')}
               className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
                 activeView === 'BIBLE'
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md'
-                  : 'text-[var(--text-muted)] hover:text-white'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -143,35 +143,35 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <button
-              onClick={() => onChangeView('ANALYTICS')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
-                activeView === 'ANALYTICS'
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md'
-                  : 'text-[var(--text-muted)] hover:text-white'
-              }`}
-            >
-              <BarChart3 className="w-3.5 h-3.5" />
-              <span className="text-[11px] sm:text-xs">品質分析</span>
-            </button>
-
-            <button
               onClick={() => onChangeView('WORKER_SUMMARY')}
               className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
                 activeView === 'WORKER_SUMMARY'
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md font-extrabold'
-                  : 'text-amber-400/90 hover:text-amber-300'
+                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
               }`}
             >
               <HardHat className="w-3.5 h-3.5" />
-              <span className="text-[11px] sm:text-xs">現場要約</span>
+              <span className="text-[11px] sm:text-xs">職人サマリー</span>
+            </button>
+
+            <button
+              onClick={() => onChangeView('ANALYTICS')}
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
+                activeView === 'ANALYTICS'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+              }`}
+            >
+              <BarChart3 className="w-3.5 h-3.5" />
+              <span className="text-[11px] sm:text-xs">分析・推移</span>
             </button>
           </div>
 
           {/* 右側：本部長肉声メーター ＆ カラースタイルセレクター ＆ 操作ボタン群（PC時） */}
           <div className="flex items-center justify-between xl:justify-end gap-3 shrink-0">
             {/* 収録進捗バー */}
-            <div className="flex flex-col min-w-[130px] sm:min-w-[150px] bg-[var(--surface-input)] xl:bg-transparent p-1 xl:p-0 rounded-lg border xl:border-none border-[var(--border-subtle)]">
-              <div className="flex justify-between text-[10px] sm:text-[11px] font-bold text-[var(--text-main)]">
+            <div className="flex flex-col min-w-[130px] sm:min-w-[150px] bg-slate-800/80 xl:bg-transparent p-1 xl:p-0 rounded-lg border xl:border-none border-slate-700/60">
+              <div className="flex justify-between text-[10px] sm:text-[11px] font-bold text-slate-200">
                 <span className="flex items-center gap-1 text-amber-400">
                   <span>👑 本部長音声</span>
                 </span>
@@ -180,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="text-amber-400 ml-1 font-mono">({progressPercent}%)</span>
                 </span>
               </div>
-              <div className="w-full bg-[var(--surface-input)] rounded-full h-1.5 overflow-hidden border border-[var(--border-subtle)] mt-1">
+              <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden border border-slate-700/60 mt-1">
                 <div
                   className="bg-gradient-to-r from-amber-500 to-orange-400 h-full rounded-full transition-all duration-500"
                   style={{ width: `${Math.max(progressPercent, 3)}%` }}
@@ -195,8 +195,8 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[var(--surface-card)] hover:bg-[var(--surface-card-hover)] border border-[var(--border-color)] text-[var(--accent-color)] text-xs font-bold transition-all shadow-sm active:scale-95"
-                  title="5つの濃淡カラースタイルを切り替え"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600 text-sky-400 text-xs font-bold transition-all shadow-sm active:scale-95"
+                  title="濃淡カラースタイルを切り替え"
                 >
                   <Palette className="w-3.5 h-3.5" />
                   <span>スタイル</span>
@@ -204,8 +204,8 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {/* テーマドロップダウンメニュー */}
                 {isThemeMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[var(--surface-card)] border-2 border-[var(--border-color)] shadow-2xl p-2 z-50 animate-fadeIn">
-                    <div className="text-[10px] font-bold text-[var(--text-muted)] px-2 py-1 mb-1 border-b border-[var(--border-subtle)]">
+                  <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl bg-white border-2 border-slate-300 shadow-2xl p-2 z-50 animate-fadeIn text-slate-800">
+                    <div className="text-[10px] font-bold text-slate-500 px-2 py-1 mb-1 border-b border-slate-200">
                       🎨 濃淡カラースタイル選択
                     </div>
                     <div className="space-y-1">
@@ -217,18 +217,18 @@ export const Header: React.FC<HeaderProps> = ({
                             onClick={() => handleSelectTheme(t.id)}
                             className={`w-full flex items-center justify-between p-2 rounded-xl text-xs font-bold transition-all ${
                               isSelected
-                                ? 'bg-[var(--badge-bg)] text-[var(--accent-color)] border border-[var(--border-color)] shadow-sm'
-                                : 'text-[var(--text-main)] hover:bg-[var(--surface-card-hover)]'
+                                ? 'bg-blue-50 text-blue-700 border border-blue-300 shadow-sm'
+                                : 'text-slate-700 hover:bg-slate-100'
                             }`}
                           >
                             <div className="flex items-center gap-2">
                               <div
-                                className="w-3.5 h-3.5 rounded-full border border-white/30"
+                                className="w-3.5 h-3.5 rounded-full border border-slate-300"
                                 style={{ backgroundColor: t.previewColors.primary }}
                               />
-                              <span>{t.name}</span>
+                              <span className="truncate">{t.name}</span>
                             </div>
-                            {isSelected && <span className="text-[10px]">✓</span>}
+                            {isSelected && <span className="text-[10px] text-blue-600 font-bold">✓</span>}
                           </button>
                         );
                       })}
@@ -239,10 +239,10 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={() => setIsAiSettingsOpen(true)}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[var(--surface-card)] hover:bg-[var(--surface-card-hover)] border border-[var(--border-subtle)] text-[var(--text-main)] text-xs font-bold transition-all shadow-sm active:scale-95"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs font-bold transition-all shadow-sm active:scale-95"
                 title="AIモデル＆API設定"
               >
-                <Settings className="w-3.5 h-3.5 text-[var(--accent-color)]" />
+                <Settings className="w-3.5 h-3.5 text-sky-400" />
                 <span>AI設定</span>
               </button>
 
@@ -256,7 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
                       : 'MIURA';
                   onOpenManual(currentPersona);
                 }}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[var(--badge-bg)] hover:opacity-90 border border-[var(--badge-border)] text-[var(--accent-color)] text-xs font-bold transition-all shadow-sm active:scale-95"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-600/50 text-sky-300 text-xs font-bold transition-all shadow-sm active:scale-95"
                 title="操作マニュアルを開く"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
@@ -283,12 +283,12 @@ export const Header: React.FC<HeaderProps> = ({
       {/* モバイル時テーマ選択メニュー */}
       {isThemeMenuOpen && (
         <div className="xl:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-xs rounded-2xl bg-[var(--surface-card)] border-2 border-[var(--border-color)] p-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-2 mb-3 border-b border-[var(--border-subtle)]">
-              <span className="text-xs font-bold text-[var(--text-heading)]">🎨 カラースタイル選択</span>
+          <div className="w-full max-w-xs rounded-2xl bg-white border-2 border-slate-300 p-4 shadow-2xl text-slate-800">
+            <div className="flex items-center justify-between pb-2 mb-3 border-b border-slate-200">
+              <span className="text-xs font-bold text-slate-900">🎨 カラースタイル選択</span>
               <button
                 onClick={() => setIsThemeMenuOpen(false)}
-                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                className="text-xs text-slate-500 hover:text-slate-900"
               >
                 ✕ 閉じる
               </button>
@@ -298,20 +298,20 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   key={t.id}
                   onClick={() => handleSelectTheme(t.id)}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold ${
+                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
                     currentTheme === t.id
-                      ? 'bg-[var(--badge-bg)] text-[var(--accent-color)] border border-[var(--border-color)]'
-                      : 'text-[var(--text-main)] bg-[var(--surface-input)] hover:bg-[var(--surface-card-hover)]'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-300 shadow-sm'
+                      : 'text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-4 h-4 rounded-full border border-white/30"
+                      className="w-4 h-4 rounded-full border border-slate-300"
                       style={{ backgroundColor: t.previewColors.primary }}
                     />
-                    <span>{t.name}</span>
+                    <span className="truncate">{t.name}</span>
                   </div>
-                  {currentTheme === t.id && <span>✓</span>}
+                  {currentTheme === t.id && <span className="text-blue-600 font-bold">✓</span>}
                 </button>
               ))}
             </div>
