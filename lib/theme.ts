@@ -93,8 +93,13 @@ export function setStoredTheme(themeId: ColorThemeId): void {
 export function applyThemeToDOM(themeId: ColorThemeId): void {
   if (typeof document === 'undefined') return;
   const root = document.documentElement;
+  const body = document.body;
   // 以前のテーマクラスを削除
-  COLOR_THEMES.forEach((t) => root.classList.remove(`theme-${t.id}`));
+  COLOR_THEMES.forEach((t) => {
+    root.classList.remove(`theme-${t.id}`);
+    if (body) body.classList.remove(`theme-${t.id}`);
+  });
   // 新テーマクラスを適用
   root.classList.add(`theme-${themeId}`);
+  if (body) body.classList.add(`theme-${themeId}`);
 }

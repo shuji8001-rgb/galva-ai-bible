@@ -6,58 +6,82 @@
 
 :root {
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-main: #0b1120;
-  --surface-main: #131b2e;
-  --accent-color: #38bdf8;
-  --accent-gradient: linear-gradient(135deg, #e2e8f0 0%, #38bdf8 50%, #93c5fd 100%);
-}
-
-/* 🪙 ジンク・メタルシルバー (デフォルト) */
-.theme-zinc {
   --bg-main: #090d16;
-  --surface-main: #131b2e;
+  --surface-header: rgba(15, 23, 42, 0.95);
+  --surface-card: rgba(19, 27, 46, 0.75);
+  --surface-card-hover: rgba(26, 37, 64, 0.9);
+  --border-color: rgba(56, 189, 248, 0.2);
   --accent-color: #38bdf8;
   --accent-gradient: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #38bdf8 100%);
+  --glow-color: rgba(56, 189, 248, 0.15);
 }
 
-/* 🌊 ディープ・シアン */
-.theme-cyan {
-  --bg-main: #04101d;
-  --surface-main: #0c1e33;
+/* 🪙 1. ジンク・メタルシルバー (デフォルト) */
+html.theme-zinc, body.theme-zinc {
+  --bg-main: #090d16;
+  --surface-header: rgba(15, 23, 42, 0.95);
+  --surface-card: rgba(19, 27, 46, 0.75);
+  --surface-card-hover: rgba(26, 37, 64, 0.9);
+  --border-color: rgba(56, 189, 248, 0.2);
+  --accent-color: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #38bdf8 100%);
+  --glow-color: rgba(56, 189, 248, 0.15);
+}
+
+/* 🌊 2. ディープ・シアン */
+html.theme-cyan, body.theme-cyan {
+  --bg-main: #030f1d;
+  --surface-header: rgba(8, 26, 47, 0.95);
+  --surface-card: rgba(12, 34, 60, 0.75);
+  --surface-card-hover: rgba(16, 45, 80, 0.9);
+  --border-color: rgba(6, 182, 212, 0.3);
   --accent-color: #06b6d4;
   --accent-gradient: linear-gradient(135deg, #e0f2fe 0%, #06b6d4 50%, #0284c7 100%);
+  --glow-color: rgba(6, 182, 212, 0.2);
 }
 
-/* ⚡ インダストリアル・アンバー */
-.theme-amber {
+/* ⚡ 3. インダストリアル・アンバー */
+html.theme-amber, body.theme-amber {
   --bg-main: #0c0a09;
-  --surface-main: #1c1917;
+  --surface-header: rgba(28, 25, 23, 0.95);
+  --surface-card: rgba(38, 34, 30, 0.8);
+  --surface-card-hover: rgba(50, 44, 38, 0.9);
+  --border-color: rgba(245, 158, 11, 0.3);
   --accent-color: #f59e0b;
   --accent-gradient: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #d97706 100%);
+  --glow-color: rgba(245, 158, 11, 0.2);
 }
 
-/* 🌲 フォレスト・エメラルド */
-.theme-emerald {
-  --bg-main: #05130d;
-  --surface-main: #0f241a;
+/* 🌲 4. フォレスト・エメラルド */
+html.theme-emerald, body.theme-emerald {
+  --bg-main: #04130c;
+  --surface-header: rgba(9, 34, 23, 0.95);
+  --surface-card: rgba(12, 45, 30, 0.8);
+  --surface-card-hover: rgba(16, 58, 38, 0.9);
+  --border-color: rgba(16, 185, 129, 0.3);
   --accent-color: #10b981;
   --accent-gradient: linear-gradient(135deg, #dcfce7 0%, #10b981 50%, #059669 100%);
+  --glow-color: rgba(16, 185, 129, 0.2);
 }
 
-/* 🌌 オブシディアン・モノトーン */
-.theme-monochrome {
-  --bg-main: #030712;
-  --surface-main: #111827;
+/* 🌌 5. オブシディアン・モノトーン */
+html.theme-monochrome, body.theme-monochrome {
+  --bg-main: #000000;
+  --surface-header: rgba(18, 18, 18, 0.95);
+  --surface-card: rgba(26, 26, 26, 0.8);
+  --surface-card-hover: rgba(38, 38, 38, 0.9);
+  --border-color: rgba(255, 255, 255, 0.2);
   --accent-color: #f3f4f6;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #4b5563 100%);
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1aa 50%, #52525b 100%);
+  --glow-color: rgba(255, 255, 255, 0.1);
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-main);
+  background-color: var(--bg-main) !important;
   color: #f1f5f9;
   overflow-x: hidden;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 /* カスタムスクロールバー */
@@ -67,31 +91,33 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.25);
+  background: var(--border-color);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.45);
+  background: var(--accent-color);
 }
 
-/* グラスモーフィズム */
+/* グラスモーフィズム & テーマ対応カード */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: var(--surface-card) !important;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .glass-card {
-  background: rgba(30, 41, 59, 0.7);
+  background: var(--surface-card) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .glass-card-hover {
@@ -99,10 +125,10 @@ body {
 }
 
 .glass-card-hover:hover {
-  background: rgba(30, 41, 59, 0.9);
-  border-color: rgba(56, 189, 248, 0.3);
+  background: var(--surface-card-hover) !important;
+  border-color: var(--accent-color) !important;
   transform: translateY(-1px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 15px -3px rgba(14, 165, 233, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px -3px var(--glow-color);
 }
 
 /* 波形アニメーション */
@@ -126,13 +152,13 @@ body {
 
 /* 亜鉛めっきのメタル光沢グラデーション（テーマ連動） */
 .galva-gradient-text {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  background: var(--accent-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 .zinc-glow {
-  box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+  box-shadow: 0 0 30px var(--glow-color);
 }
 
 /* スクロールバー非表示（スマホ用横スクロールなど） */
@@ -142,12 +168,4 @@ body {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* スマホでのタッチハイライト無効化・快適化 */
-* {
-  -webkit-tap-highlight-color: transparent;
-}
-html {
-  scroll-behavior: smooth;
 }

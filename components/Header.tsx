@@ -40,7 +40,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="border-b border-slate-800 bg-slate-900/95 backdrop-blur-md sticky top-0 z-40 px-3 sm:px-4 lg:px-6 py-2 shadow-lg shadow-black/20">
+      <header className="border-b border-[var(--border-color)] bg-[var(--surface-header)] backdrop-blur-md sticky top-0 z-40 px-3 sm:px-4 lg:px-6 py-2 shadow-lg shadow-black/30 transition-colors duration-300">
         <div className="max-w-[1750px] mx-auto flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-2.5">
           
           {/* 左側：ロゴ ＆ タイトル ＆ JISバッジ */}

@@ -254,7 +254,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-main)] text-slate-100 selection:bg-cyan-500 selection:text-slate-950 transition-colors duration-300">
       {/* 共通ヘッダー（3タブナビゲーション ＆ 4視点マニュアル付き） */}
       <Header
         questions={questions}
