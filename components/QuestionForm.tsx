@@ -571,17 +571,17 @@ export const QuestionForm: React.FC<QuestionFormProps> = ({
             <button
               type="submit"
               disabled={isSubmitting || (!rawText.trim() && imagePreviews.length === 0)}
-              className="col-span-6 flex items-center justify-center gap-1 py-1.5 px-2 rounded-lg bg-gradient-to-r from-sky-500 via-blue-600 to-sky-600 hover:from-sky-400 hover:to-blue-500 text-white text-[11px] font-black shadow-md shadow-sky-500/20 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95"
+              className="col-span-6 flex items-center justify-center gap-1.5 py-2 px-2.5 rounded-lg bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-blue-500 text-white text-xs font-black shadow-lg shadow-cyan-500/25 border border-cyan-400/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="w-3 h-3 animate-spin" />
-                  <span>具体化中...</span>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>AI具体化中...</span>
                 </>
               ) : (
                 <>
-                  <Sparkles className="w-3 h-3 text-amber-300 shrink-0" />
-                  <span className="truncate">✨ AI具体化プレビュー</span>
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                  <span className="font-extrabold tracking-tight">AI具体化プレビュー</span>
                 </>
               )}
             </button>

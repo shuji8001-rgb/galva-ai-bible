@@ -19,7 +19,6 @@ import {
   syncFromSupabase,
   resetAllToDefaults,
 } from '@/lib/storage';
-import { getStoredTheme, applyThemeToDOM } from '@/lib/theme';
 import { BookOpen, ListOrdered } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -55,18 +54,8 @@ export default function DashboardPage() {
     }
   };
 
-  // 初期ロード ＆ Supabase同期 ＆ テーマ適用
+  // 初期ロード ＆ Supabase同期
   useEffect(() => {
-    // カラーテーマの適用
-    const currentTheme = getStoredTheme();
-    applyThemeToDOM(currentTheme);
-
-    const handleThemeChange = (e: any) => {
-      const newTheme = e.detail || getStoredTheme();
-      applyThemeToDOM(newTheme);
-    };
-    window.addEventListener('theme-changed', handleThemeChange);
-
     async function loadData() {
       const initialQ = getLocalQuestions();
       const initialK = getLocalKnowledge();
