@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,246 +6,285 @@
 
 :root {
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-main: #090d16;
-  --surface-header: rgba(15, 23, 42, 0.95);
-  --surface-card: rgba(19, 27, 46, 0.75);
-  --surface-card-hover: rgba(26, 37, 64, 0.9);
-  --border-color: rgba(56, 189, 248, 0.2);
+  --bg-main: #0f172a;
+  --surface-header: #1e293b;
+  --surface-card: #1e293b;
+  --surface-card-hover: #334155;
+  --surface-input: #0f172a;
+  --border-color: #38bdf8;
+  --border-subtle: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --accent-color: #38bdf8;
-  --accent-gradient: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #38bdf8 100%);
-  --glow-color: rgba(56, 189, 248, 0.15);
+  --accent-light: #7dd3fc;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #0284c7 100%);
+  --btn-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(56, 189, 248, 0.15);
+  --badge-border: rgba(56, 189, 248, 0.4);
+  --badge-text: #38bdf8;
+  --glow-color: rgba(56, 189, 248, 0.25);
 }
 
-/* 🪙 1. ジンク・メタルシルバー (デフォルト) */
+/* ==========================================================================
+   🪙 1. ジンク・チタンシルバー (Zinc & Titanium: 明るめメタル＆スカイブルー)
+   ========================================================================== */
 html.theme-zinc, body.theme-zinc {
-  --bg-main: #090d16;
-  --surface-header: rgba(15, 23, 42, 0.95);
-  --surface-card: rgba(19, 27, 46, 0.75);
-  --surface-card-hover: rgba(26, 37, 64, 0.9);
-  --border-color: rgba(56, 189, 248, 0.2);
+  --bg-main: #0f172a;
+  --surface-header: #1e293b;
+  --surface-card: #1e293b;
+  --surface-card-hover: #334155;
+  --surface-input: #0f172a;
+  --border-color: #38bdf8;
+  --border-subtle: #334155;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
   --accent-color: #38bdf8;
-  --accent-gradient: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #38bdf8 100%);
-  --glow-color: rgba(56, 189, 248, 0.15);
+  --accent-light: #7dd3fc;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #38bdf8 60%, #0284c7 100%);
+  --btn-gradient: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(56, 189, 248, 0.18);
+  --badge-border: rgba(56, 189, 248, 0.45);
+  --badge-text: #38bdf8;
+  --glow-color: rgba(56, 189, 248, 0.25);
 }
 
-/* 🌊 2. ディープ・シアン */
+/* ==========================================================================
+   🌊 2. ディープ・オーシャンシアン (Cyan & Ocean: 鮮明シアン＆サファイア)
+   ========================================================================== */
 html.theme-cyan, body.theme-cyan {
-  --bg-main: #030f1d;
-  --surface-header: rgba(8, 26, 47, 0.95);
-  --surface-card: rgba(12, 34, 60, 0.75);
-  --surface-card-hover: rgba(16, 45, 80, 0.9);
-  --border-color: rgba(6, 182, 212, 0.3);
-  --accent-color: #06b6d4;
-  --accent-gradient: linear-gradient(135deg, #e0f2fe 0%, #06b6d4 50%, #0284c7 100%);
-  --glow-color: rgba(6, 182, 212, 0.2);
+  --bg-main: #081d33;
+  --surface-header: #0f2d4e;
+  --surface-card: #10345b;
+  --surface-card-hover: #164679;
+  --surface-input: #07192c;
+  --border-color: #06b6d4;
+  --border-subtle: #194877;
+  --text-main: #ffffff;
+  --text-muted: #93c5fd;
+  --accent-color: #22d3ee;
+  --accent-light: #67e8f9;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #22d3ee 50%, #0891b2 100%);
+  --btn-gradient: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(6, 182, 212, 0.2);
+  --badge-border: rgba(6, 182, 212, 0.5);
+  --badge-text: #22d3ee;
+  --glow-color: rgba(6, 182, 212, 0.3);
 }
 
-.theme-cyan .bg-slate-900,
-.theme-cyan .bg-slate-950,
-.theme-cyan .bg-slate-900\/95,
-.theme-cyan .bg-slate-950\/90,
-.theme-cyan .bg-slate-950\/60 {
-  background-color: #081a2f !important;
-}
-.theme-cyan .bg-slate-800,
-.theme-cyan .bg-slate-800\/50,
-.theme-cyan .bg-slate-800\/90 {
-  background-color: #0e2a4a !important;
-}
-.theme-cyan .border-slate-800,
-.theme-cyan .border-slate-700 {
-  border-color: rgba(6, 182, 212, 0.25) !important;
-}
-.theme-cyan .text-cyan-400,
-.theme-cyan .text-cyan-300 {
-  color: #22d3ee !important;
-}
-
-/* ⚡ 3. インダストリアル・アンバー */
+/* ==========================================================================
+   ⚡ 3. インダストリアル・ゴールドアンバー (Amber & Warm Zinc: 黄金アンバー＆ウォーム)
+   ========================================================================== */
 html.theme-amber, body.theme-amber {
-  --bg-main: #0c0a09;
-  --surface-header: rgba(28, 25, 23, 0.95);
-  --surface-card: rgba(38, 34, 30, 0.8);
-  --surface-card-hover: rgba(50, 44, 38, 0.9);
-  --border-color: rgba(245, 158, 11, 0.3);
-  --accent-color: #f59e0b;
-  --accent-gradient: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #d97706 100%);
-  --glow-color: rgba(245, 158, 11, 0.2);
+  --bg-main: #181512;
+  --surface-header: #26211c;
+  --surface-card: #2e2822;
+  --surface-card-hover: #3d352e;
+  --surface-input: #14110e;
+  --border-color: #f59e0b;
+  --border-subtle: #453c33;
+  --text-main: #fffbeb;
+  --text-muted: #d6cfb8;
+  --accent-color: #fbbf24;
+  --accent-light: #fde68a;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #fbbf24 60%, #d97706 100%);
+  --btn-gradient: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(245, 158, 11, 0.2);
+  --badge-border: rgba(245, 158, 11, 0.5);
+  --badge-text: #fbbf24;
+  --glow-color: rgba(245, 158, 11, 0.3);
 }
 
-.theme-amber .bg-slate-900,
-.theme-amber .bg-slate-950,
-.theme-amber .bg-slate-900\/95,
-.theme-amber .bg-slate-950\/90,
-.theme-amber .bg-slate-950\/60 {
-  background-color: #1c1917 !important;
-}
-.theme-amber .bg-slate-800,
-.theme-amber .bg-slate-800\/50,
-.theme-amber .bg-slate-800\/90 {
-  background-color: #292524 !important;
-}
-.theme-amber .border-slate-800,
-.theme-amber .border-slate-700 {
-  border-color: rgba(245, 158, 11, 0.3) !important;
-}
-.theme-amber .text-cyan-400,
-.theme-amber .text-cyan-300,
-.theme-amber .text-cyan-500 {
-  color: #fbbf24 !important;
-}
-.theme-amber .border-cyan-500,
-.theme-amber .border-cyan-400,
-.theme-amber .border-cyan-800 {
-  border-color: #f59e0b !important;
-}
-.theme-amber .bg-cyan-950,
-.theme-amber .bg-cyan-950\/80 {
-  background-color: #451a03 !important;
-}
-
-/* 🌲 4. フォレスト・エメラルド */
+/* ==========================================================================
+   🌲 4. フォレスト・ミントエメラルド (Emerald & Mint: 爽快ミント＆JISグリーン)
+   ========================================================================== */
 html.theme-emerald, body.theme-emerald {
-  --bg-main: #04130c;
-  --surface-header: rgba(9, 34, 23, 0.95);
-  --surface-card: rgba(12, 45, 30, 0.8);
-  --surface-card-hover: rgba(16, 58, 38, 0.9);
-  --border-color: rgba(16, 185, 129, 0.3);
-  --accent-color: #10b981;
-  --accent-gradient: linear-gradient(135deg, #dcfce7 0%, #10b981 50%, #059669 100%);
-  --glow-color: rgba(16, 185, 129, 0.2);
+  --bg-main: #0a1f16;
+  --surface-header: #113324;
+  --surface-card: #153e2c;
+  --surface-card-hover: #1c523b;
+  --surface-input: #081a12;
+  --border-color: #10b981;
+  --border-subtle: #1f563d;
+  --text-main: #f0fdf4;
+  --text-muted: #a7f3d0;
+  --accent-color: #34d399;
+  --accent-light: #6ee7b7;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #34d399 60%, #059669 100%);
+  --btn-gradient: linear-gradient(135deg, #059669 0%, #047857 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(16, 185, 129, 0.2);
+  --badge-border: rgba(16, 185, 129, 0.5);
+  --badge-text: #34d399;
+  --glow-color: rgba(16, 185, 129, 0.3);
 }
 
-.theme-emerald .bg-slate-900,
-.theme-emerald .bg-slate-950,
-.theme-emerald .bg-slate-900\/95,
-.theme-emerald .bg-slate-950\/90,
-.theme-emerald .bg-slate-950\/60 {
-  background-color: #092217 !important;
-}
-.theme-emerald .bg-slate-800,
-.theme-emerald .bg-slate-800\/50,
-.theme-emerald .bg-slate-800\/90 {
-  background-color: #0f3323 !important;
-}
-.theme-emerald .border-slate-800,
-.theme-emerald .border-slate-700 {
-  border-color: rgba(16, 185, 129, 0.25) !important;
-}
-.theme-emerald .text-cyan-400,
-.theme-emerald .text-cyan-300,
-.theme-emerald .text-cyan-500 {
-  color: #34d399 !important;
-}
-.theme-emerald .border-cyan-500,
-.theme-emerald .border-cyan-400,
-.theme-emerald .border-cyan-800 {
-  border-color: #10b981 !important;
-}
-.theme-emerald .bg-cyan-950,
-.theme-emerald .bg-cyan-950\/80 {
-  background-color: #064e3b !important;
-}
-
-/* 🌌 5. オブシディアン・モノトーン */
+/* ==========================================================================
+   🏛️ 5. プラチナ・モノトーン (Platinum & Graphite: 明るめプラチナ＆純白)
+   ========================================================================== */
 html.theme-monochrome, body.theme-monochrome {
-  --bg-main: #000000;
-  --surface-header: rgba(18, 18, 18, 0.95);
-  --surface-card: rgba(26, 26, 26, 0.8);
-  --surface-card-hover: rgba(38, 38, 38, 0.9);
-  --border-color: rgba(255, 255, 255, 0.2);
-  --accent-color: #f3f4f6;
-  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1aa 50%, #52525b 100%);
-  --glow-color: rgba(255, 255, 255, 0.1);
+  --bg-main: #141416;
+  --surface-header: #202024;
+  --surface-card: #27272c;
+  --surface-card-hover: #35353c;
+  --surface-input: #101012;
+  --border-color: #e4e4e7;
+  --border-subtle: #3f3f46;
+  --text-main: #ffffff;
+  --text-muted: #d4d4d8;
+  --accent-color: #ffffff;
+  --accent-light: #f4f4f5;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #e4e4e7 60%, #a1a1aa 100%);
+  --btn-gradient: linear-gradient(135deg, #52525b 0%, #3f3f46 100%);
+  --btn-text: #ffffff;
+  --badge-bg: rgba(255, 255, 255, 0.18);
+  --badge-border: rgba(255, 255, 255, 0.4);
+  --badge-text: #ffffff;
+  --glow-color: rgba(255, 255, 255, 0.25);
 }
 
-.theme-monochrome .bg-slate-900,
-.theme-monochrome .bg-slate-950,
-.theme-monochrome .bg-slate-900\/95,
-.theme-monochrome .bg-slate-950\/90,
-.theme-monochrome .bg-slate-950\/60 {
-  background-color: #121212 !important;
-}
-.theme-monochrome .bg-slate-800,
-.theme-monochrome .bg-slate-800\/50,
-.theme-monochrome .bg-slate-800\/90 {
-  background-color: #1e1e1e !important;
-}
-.theme-monochrome .border-slate-800,
-.theme-monochrome .border-slate-700 {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-.theme-monochrome .text-cyan-400,
-.theme-monochrome .text-cyan-300,
-.theme-monochrome .text-cyan-500 {
-  color: #f3f4f6 !important;
-}
+/* ==========================================================================
+   全要素への強制スタイル適用（背景・カード・線・ボタン・文字・バッジ）
+   ========================================================================== */
 
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-main) !important;
-  color: #f1f5f9;
+  color: var(--text-main) !important;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* カスタムスクロールバー */
+/* ヘッダー */
+header {
+  background-color: var(--surface-header) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+/* カード & パネル */
+.glass-panel,
+.glass-card,
+section .rounded-2xl,
+section .rounded-xl,
+.bg-slate-900,
+.bg-slate-950,
+.bg-slate-900\/95,
+.bg-slate-950\/90,
+.bg-slate-950\/85,
+.bg-slate-950\/60 {
+  background-color: var(--surface-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-main) !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-card-hover:hover {
+  background-color: var(--surface-card-hover) !important;
+  border-color: var(--border-color) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.4), 0 0 20px -2px var(--glow-color) !important;
+}
+
+/* 入力エリア・検索ボックス・セレクト */
+input, textarea, select, .bg-slate-950.border {
+  background-color: var(--surface-input) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-main) !important;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 2px var(--badge-bg) !important;
+}
+
+/* サブ背景（ボタン、タグ、インデックス項目等） */
+.bg-slate-800,
+.bg-slate-800\/50,
+.bg-slate-800\/90 {
+  background-color: var(--surface-card-hover) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+/* ボーダー全般 */
+.border-slate-800,
+.border-slate-700,
+.border-slate-900 {
+  border-color: var(--border-subtle) !important;
+}
+
+/* アクセントテキスト（シアン系・キーテキスト） */
+.text-cyan-400,
+.text-cyan-300,
+.text-cyan-500,
+.text-cyan-200 {
+  color: var(--accent-color) !important;
+}
+
+.text-slate-400,
+.text-slate-300 {
+  color: var(--text-muted) !important;
+}
+
+/* バッジ・タグ */
+.bg-cyan-950,
+.bg-cyan-950\/80,
+.bg-cyan-950\/60,
+.bg-cyan-900\/60 {
+  background-color: var(--badge-bg) !important;
+  border-color: var(--badge-border) !important;
+  color: var(--badge-text) !important;
+}
+
+.border-cyan-800,
+.border-cyan-500,
+.border-cyan-400 {
+  border-color: var(--border-color) !important;
+}
+
+/* プライマリボタン（グラデーション） */
+.bg-gradient-to-r.from-cyan-500,
+.bg-gradient-to-r.from-cyan-600 {
+  background: var(--btn-gradient) !important;
+  color: var(--btn-text) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 4px 14px 0 var(--glow-color) !important;
+}
+
+/* タイトル・グラデーションテキスト */
+.galva-gradient-text {
+  background: var(--accent-gradient) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.zinc-glow {
+  box-shadow: 0 0 35px var(--glow-color) !important;
+}
+
+/* スクロールバー */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--surface-input);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--border-subtle);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-color);
 }
 
-/* グラスモーフィズム & テーマ対応カード */
-.glass-panel {
-  background: var(--surface-card) !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color) !important;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.glass-card {
-  background: var(--surface-card) !important;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color) !important;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.glass-card-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-card-hover:hover {
-  background: var(--surface-card-hover) !important;
-  border-color: var(--accent-color) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px -3px var(--glow-color);
-}
-
 /* 波形アニメーション */
 @keyframes wave-bar {
-  0%, 100% {
-    height: 6px;
-  }
-  50% {
-    height: 36px;
-  }
+  0%, 100% { height: 6px; }
+  50% { height: 36px; }
 }
-
 .wave-bar-1 { animation: wave-bar 0.9s ease-in-out infinite 0.1s; }
 .wave-bar-2 { animation: wave-bar 0.7s ease-in-out infinite 0.2s; }
 .wave-bar-3 { animation: wave-bar 1.1s ease-in-out infinite 0.3s; }
@@ -255,18 +294,6 @@ body {
 .wave-bar-7 { animation: wave-bar 0.95s ease-in-out infinite 0.35s; }
 .wave-bar-8 { animation: wave-bar 0.85s ease-in-out infinite 0.2s; }
 
-/* 亜鉛めっきのメタル光沢グラデーション（テーマ連動） */
-.galva-gradient-text {
-  background: var(--accent-gradient) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-.zinc-glow {
-  box-shadow: 0 0 30px var(--glow-color);
-}
-
-/* スクロールバー非表示（スマホ用横スクロールなど） */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
