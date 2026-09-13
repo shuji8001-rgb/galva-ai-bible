@@ -40,6 +40,27 @@ html.theme-cyan, body.theme-cyan {
   --glow-color: rgba(6, 182, 212, 0.2);
 }
 
+.theme-cyan .bg-slate-900,
+.theme-cyan .bg-slate-950,
+.theme-cyan .bg-slate-900\/95,
+.theme-cyan .bg-slate-950\/90,
+.theme-cyan .bg-slate-950\/60 {
+  background-color: #081a2f !important;
+}
+.theme-cyan .bg-slate-800,
+.theme-cyan .bg-slate-800\/50,
+.theme-cyan .bg-slate-800\/90 {
+  background-color: #0e2a4a !important;
+}
+.theme-cyan .border-slate-800,
+.theme-cyan .border-slate-700 {
+  border-color: rgba(6, 182, 212, 0.25) !important;
+}
+.theme-cyan .text-cyan-400,
+.theme-cyan .text-cyan-300 {
+  color: #22d3ee !important;
+}
+
 /* ⚡ 3. インダストリアル・アンバー */
 html.theme-amber, body.theme-amber {
   --bg-main: #0c0a09;
@@ -50,6 +71,37 @@ html.theme-amber, body.theme-amber {
   --accent-color: #f59e0b;
   --accent-gradient: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #d97706 100%);
   --glow-color: rgba(245, 158, 11, 0.2);
+}
+
+.theme-amber .bg-slate-900,
+.theme-amber .bg-slate-950,
+.theme-amber .bg-slate-900\/95,
+.theme-amber .bg-slate-950\/90,
+.theme-amber .bg-slate-950\/60 {
+  background-color: #1c1917 !important;
+}
+.theme-amber .bg-slate-800,
+.theme-amber .bg-slate-800\/50,
+.theme-amber .bg-slate-800\/90 {
+  background-color: #292524 !important;
+}
+.theme-amber .border-slate-800,
+.theme-amber .border-slate-700 {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+.theme-amber .text-cyan-400,
+.theme-amber .text-cyan-300,
+.theme-amber .text-cyan-500 {
+  color: #fbbf24 !important;
+}
+.theme-amber .border-cyan-500,
+.theme-amber .border-cyan-400,
+.theme-amber .border-cyan-800 {
+  border-color: #f59e0b !important;
+}
+.theme-amber .bg-cyan-950,
+.theme-amber .bg-cyan-950\/80 {
+  background-color: #451a03 !important;
 }
 
 /* 🌲 4. フォレスト・エメラルド */
@@ -64,6 +116,37 @@ html.theme-emerald, body.theme-emerald {
   --glow-color: rgba(16, 185, 129, 0.2);
 }
 
+.theme-emerald .bg-slate-900,
+.theme-emerald .bg-slate-950,
+.theme-emerald .bg-slate-900\/95,
+.theme-emerald .bg-slate-950\/90,
+.theme-emerald .bg-slate-950\/60 {
+  background-color: #092217 !important;
+}
+.theme-emerald .bg-slate-800,
+.theme-emerald .bg-slate-800\/50,
+.theme-emerald .bg-slate-800\/90 {
+  background-color: #0f3323 !important;
+}
+.theme-emerald .border-slate-800,
+.theme-emerald .border-slate-700 {
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+.theme-emerald .text-cyan-400,
+.theme-emerald .text-cyan-300,
+.theme-emerald .text-cyan-500 {
+  color: #34d399 !important;
+}
+.theme-emerald .border-cyan-500,
+.theme-emerald .border-cyan-400,
+.theme-emerald .border-cyan-800 {
+  border-color: #10b981 !important;
+}
+.theme-emerald .bg-cyan-950,
+.theme-emerald .bg-cyan-950\/80 {
+  background-color: #064e3b !important;
+}
+
 /* 🌌 5. オブシディアン・モノトーン */
 html.theme-monochrome, body.theme-monochrome {
   --bg-main: #000000;
@@ -74,6 +157,28 @@ html.theme-monochrome, body.theme-monochrome {
   --accent-color: #f3f4f6;
   --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1aa 50%, #52525b 100%);
   --glow-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-monochrome .bg-slate-900,
+.theme-monochrome .bg-slate-950,
+.theme-monochrome .bg-slate-900\/95,
+.theme-monochrome .bg-slate-950\/90,
+.theme-monochrome .bg-slate-950\/60 {
+  background-color: #121212 !important;
+}
+.theme-monochrome .bg-slate-800,
+.theme-monochrome .bg-slate-800\/50,
+.theme-monochrome .bg-slate-800\/90 {
+  background-color: #1e1e1e !important;
+}
+.theme-monochrome .border-slate-800,
+.theme-monochrome .border-slate-700 {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.theme-monochrome .text-cyan-400,
+.theme-monochrome .text-cyan-300,
+.theme-monochrome .text-cyan-500 {
+  color: #f3f4f6 !important;
 }
 
 body {

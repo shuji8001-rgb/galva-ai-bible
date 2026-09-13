@@ -88,6 +88,7 @@ export function setStoredTheme(themeId: ColorThemeId): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEY, themeId);
   applyThemeToDOM(themeId);
+  window.dispatchEvent(new CustomEvent('theme-changed', { detail: themeId }));
 }
 
 export function applyThemeToDOM(themeId: ColorThemeId): void {

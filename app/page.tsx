@@ -57,11 +57,17 @@ export default function DashboardPage() {
 
   // 初期ロード ＆ Supabase同期 ＆ テーマ適用
   useEffect(() => {
-    async function loadData() {
-      // カラーテーマの適用
-      const currentTheme = getStoredTheme();
-      applyThemeToDOM(currentTheme);
+    // カラーテーマの適用
+    const currentTheme = getStoredTheme();
+    applyThemeToDOM(currentTheme);
 
+    const handleThemeChange = (e: any) => {
+      const newTheme = e.detail || getStoredTheme();
+      applyThemeToDOM(newTheme);
+    };
+    window.addEventListener('theme-changed', handleThemeChange);
+
+    async function loadData() {
       const initialQ = getLocalQuestions();
       const initialK = getLocalKnowledge();
       setQuestions(initialQ);
