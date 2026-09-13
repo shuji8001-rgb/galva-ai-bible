@@ -1,0 +1,6 @@
+{
+  "name": "galva-tech-bible",
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install"
+}

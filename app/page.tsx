@@ -19,6 +19,7 @@ import {
   syncFromSupabase,
   resetAllToDefaults,
 } from '@/lib/storage';
+import { getStoredTheme, applyThemeToDOM } from '@/lib/theme';
 import { BookOpen, ListOrdered } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -54,9 +55,13 @@ export default function DashboardPage() {
     }
   };
 
-  // 初期ロード ＆ Supabase同期
+  // 初期ロード ＆ Supabase同期 ＆ テーマ適用
   useEffect(() => {
     async function loadData() {
+      // カラーテーマの適用
+      const currentTheme = getStoredTheme();
+      applyThemeToDOM(currentTheme);
+
       const initialQ = getLocalQuestions();
       const initialK = getLocalKnowledge();
       setQuestions(initialQ);
@@ -280,10 +285,10 @@ export default function DashboardPage() {
 
       {/* モバイル用タブ切替（バイブルモード時のみ） */}
       {activeView === 'BIBLE' && (
-        <div className="lg:hidden flex border-b border-slate-800 bg-slate-900 sticky top-[69px] z-30">
+        <div className="lg:hidden flex border-b border-slate-800 bg-slate-900 sticky top-[56px] z-30">
           <button
             onClick={() => setActiveTabMobile('INDEX')}
-            className={`flex-1 py-2.5 text-xs font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${
+            className={`flex-1 py-2 text-xs font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeTabMobile === 'INDEX'
                 ? 'border-cyan-400 text-cyan-400 bg-slate-800/50'
                 : 'border-transparent text-slate-400'
@@ -294,7 +299,7 @@ export default function DashboardPage() {
           </button>
           <button
             onClick={() => setActiveTabMobile('INTERVIEW')}
-            className={`flex-1 py-2.5 text-xs font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${
+            className={`flex-1 py-2 text-xs font-bold flex items-center justify-center gap-2 border-b-2 transition-colors ${
               activeTabMobile === 'INTERVIEW'
                 ? 'border-amber-400 text-amber-400 bg-slate-800/50'
                 : 'border-transparent text-slate-400'
@@ -307,13 +312,13 @@ export default function DashboardPage() {
       )}
 
       {/* メインコンテンツエリア */}
-      <main className="flex-1 max-w-[1750px] w-full mx-auto p-3 lg:p-6">
+      <main className="flex-1 max-w-[1750px] w-full mx-auto p-3 lg:p-5">
         {/* VIEW 1: 品質バイブル（標準QA 2画面スプリット） */}
         {activeView === 'BIBLE' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
             {/* 左ペイン：三浦さん質問投稿 ＆ 200問アコーディオン（幅4/12） */}
             <section
-              className={`lg:col-span-4 flex flex-col h-auto lg:h-[calc(100vh-90px)] lg:sticky lg:top-[76px] space-y-3 min-h-0 ${
+              className={`lg:col-span-4 flex flex-col h-auto lg:h-[calc(100vh-76px)] lg:sticky lg:top-[64px] space-y-3 min-h-0 ${
                 activeTabMobile === 'INTERVIEW' ? 'hidden lg:flex' : 'flex'
               }`}
             >

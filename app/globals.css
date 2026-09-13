@@ -6,13 +6,58 @@
 
 :root {
   --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bg-main: #0b1120;
+  --surface-main: #131b2e;
+  --accent-color: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #e2e8f0 0%, #38bdf8 50%, #93c5fd 100%);
+}
+
+/* 🪙 ジンク・メタルシルバー (デフォルト) */
+.theme-zinc {
+  --bg-main: #090d16;
+  --surface-main: #131b2e;
+  --accent-color: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #38bdf8 100%);
+}
+
+/* 🌊 ディープ・シアン */
+.theme-cyan {
+  --bg-main: #04101d;
+  --surface-main: #0c1e33;
+  --accent-color: #06b6d4;
+  --accent-gradient: linear-gradient(135deg, #e0f2fe 0%, #06b6d4 50%, #0284c7 100%);
+}
+
+/* ⚡ インダストリアル・アンバー */
+.theme-amber {
+  --bg-main: #0c0a09;
+  --surface-main: #1c1917;
+  --accent-color: #f59e0b;
+  --accent-gradient: linear-gradient(135deg, #fef3c7 0%, #f59e0b 50%, #d97706 100%);
+}
+
+/* 🌲 フォレスト・エメラルド */
+.theme-emerald {
+  --bg-main: #05130d;
+  --surface-main: #0f241a;
+  --accent-color: #10b981;
+  --accent-gradient: linear-gradient(135deg, #dcfce7 0%, #10b981 50%, #059669 100%);
+}
+
+/* 🌌 オブシディアン・モノトーン */
+.theme-monochrome {
+  --bg-main: #030712;
+  --surface-main: #111827;
+  --accent-color: #f3f4f6;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #9ca3af 50%, #4b5563 100%);
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: #0b1120;
+  background-color: var(--bg-main);
   color: #f1f5f9;
   overflow-x: hidden;
+  transition: background-color 0.3s ease;
 }
 
 /* カスタムスクロールバー */
@@ -79,9 +124,9 @@ body {
 .wave-bar-7 { animation: wave-bar 0.95s ease-in-out infinite 0.35s; }
 .wave-bar-8 { animation: wave-bar 0.85s ease-in-out infinite 0.2s; }
 
-/* 亜鉛めっきのメタル光沢グラデーション */
+/* 亜鉛めっきのメタル光沢グラデーション（テーマ連動） */
 .galva-gradient-text {
-  background: linear-gradient(135deg, #e2e8f0 0%, #38bdf8 50%, #93c5fd 100%);
+  background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

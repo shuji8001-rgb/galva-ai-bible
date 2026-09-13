@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { X, Sparkles, Key, Cpu, CheckCircle2, ExternalLink, Shield } from 'lucide-react';
+import { X, Sparkles, Key, Cpu, CheckCircle2, ExternalLink, Shield, Palette } from 'lucide-react';
+import { COLOR_THEMES, ColorThemeId, getStoredTheme, setStoredTheme } from '@/lib/theme';
 
 interface AiSettingsModalProps {
   isOpen: boolean;
@@ -11,23 +12,32 @@ interface AiSettingsModalProps {
 export const AiSettingsModal: React.FC<AiSettingsModalProps> = ({ isOpen, onClose }) => {
   const [apiKey, setApiKey] = useState('');
   const [selectedModel, setSelectedModel] = useState('gemini-1.5-pro');
+  const [selectedTheme, setSelectedTheme] = useState<ColorThemeId>('zinc');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedKey = localStorage.getItem('galva_gemini_api_key') || '';
       const storedModel = localStorage.getItem('galva_gemini_model') || 'gemini-1.5-pro';
+      const storedThemeId = getStoredTheme();
       setApiKey(storedKey);
       setSelectedModel(storedModel);
+      setSelectedTheme(storedThemeId);
     }
   }, [isOpen]);
 
   if (!isOpen) return null;
 
+  const handleSelectTheme = (themeId: ColorThemeId) => {
+    setSelectedTheme(themeId);
+    setStoredTheme(themeId);
+  };
+
   const handleSave = () => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('galva_gemini_api_key', apiKey.trim());
       localStorage.setItem('galva_gemini_model', selectedModel);
+      setStoredTheme(selectedTheme);
       setSavedSuccess(true);
       setTimeout(() => {
         setSavedSuccess(false);
@@ -54,9 +64,9 @@ export const AiSettingsModal: React.FC<AiSettingsModalProps> = ({ isOpen, onClos
             </div>
             <div>
               <h3 className="text-base font-black text-white flex items-center gap-2">
-                <span>⚙️ AI知能モデル＆API設定</span>
+                <span>⚙️ システム＆スタイル設定</span>
               </h3>
-              <p className="text-xs text-cyan-300/80">最上位Geminiモデルによる深層技術推論</p>
+              <p className="text-xs text-cyan-300/80">カラーテーマ濃淡選択 ＆ AIモデル設定</p>
             </div>
           </div>
           <button
@@ -68,10 +78,81 @@ export const AiSettingsModal: React.FC<AiSettingsModalProps> = ({ isOpen, onClos
         </div>
 
         {/* 本文 */}
-        <div className="p-4 sm:p-6 space-y-4 text-xs text-slate-200 overflow-y-auto max-h-[75vh]">
-          {/* モデル選択 */}
-          <div className="space-y-2">
-            <label className="font-bold text-slate-100 flex items-center gap-1.5">
+        <div className="p-4 sm:p-6 space-y-5 text-xs text-slate-200 overflow-y-auto max-h-[75vh]">
+          
+          {/* 🎨 カラーテーマ濃淡スタイル選択 */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="font-bold text-slate-100 flex items-center gap-1.5 text-sm">
+                <Palette className="w-4 h-4 text-cyan-400" />
+                <span>カラースタイル・濃淡テーマ</span>
+              </label>
+              <span className="text-[10px] text-slate-400">少ない色数の洗練された濃淡</span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-2">
+              {COLOR_THEMES.map((t) => {
+                const isSelected = selectedTheme === t.id;
+                return (
+                  <div
+                    key={t.id}
+                    onClick={() => handleSelectTheme(t.id)}
+                    className={`p-2.5 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
+                      isSelected
+                        ? 'bg-slate-800/90 border-cyan-400 ring-1 ring-cyan-400/60 shadow-md shadow-cyan-500/10'
+                        : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {/* カラープレビューチップ（4色濃淡） */}
+                      <div className="flex items-center -space-x-1 shrink-0 p-1 rounded-lg bg-black/40 border border-white/10">
+                        <div
+                          className="w-4 h-4 rounded-full border border-white/20"
+                          style={{ backgroundColor: t.previewColors.bg }}
+                          title="背景"
+                        />
+                        <div
+                          className="w-4 h-4 rounded-full border border-white/20"
+                          style={{ backgroundColor: t.previewColors.surface }}
+                          title="サーフェス"
+                        />
+                        <div
+                          className="w-4 h-4 rounded-full border border-white/20"
+                          style={{ backgroundColor: t.previewColors.primary }}
+                          title="プライマリ"
+                        />
+                        <div
+                          className="w-4 h-4 rounded-full border border-white/20"
+                          style={{ backgroundColor: t.previewColors.accent }}
+                          title="アクセント"
+                        />
+                      </div>
+
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-bold text-white text-xs">{t.name}</span>
+                          <span className="text-[9px] px-1.5 py-0.2 rounded bg-slate-800 text-cyan-300 font-bold border border-slate-700">
+                            {t.badge}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-1">
+                          {t.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 ml-2" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* AIモデル選択 */}
+          <div className="space-y-2 pt-3 border-t border-slate-800">
+            <label className="font-bold text-slate-100 flex items-center gap-1.5 text-sm">
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span>利用するAIモデルを選択</span>
             </label>
@@ -127,9 +208,9 @@ export const AiSettingsModal: React.FC<AiSettingsModalProps> = ({ isOpen, onClos
           </div>
 
           {/* Gemini API Key */}
-          <div className="space-y-2 pt-2 border-t border-slate-800">
+          <div className="space-y-2 pt-3 border-t border-slate-800">
             <div className="flex items-center justify-between">
-              <label className="font-bold text-slate-100 flex items-center gap-1.5">
+              <label className="font-bold text-slate-100 flex items-center gap-1.5 text-sm">
                 <Key className="w-4 h-4 text-cyan-400" />
                 <span>Google AI Studio APIキー（任意）</span>
               </label>
