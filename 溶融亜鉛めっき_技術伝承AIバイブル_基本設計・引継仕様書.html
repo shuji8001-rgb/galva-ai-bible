@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>【基本設計・完全引継仕様書】溶融亜鉛めっき 技術伝承AIバイブル</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 15mm 13mm 17mm 13mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+    color: #1e293b;
+    background-color: #ffffff;
+    line-height: 1.5;
+    font-size: 9.5pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* カバーページ */
+  .cover-page {
+    page-break-after: always;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 35px 20px;
+    border-left: 8px solid #0891b2;
+  }
+
+  .cover-header {
+    margin-top: 45px;
+  }
+
+  .badge-tag {
+    display: inline-block;
+    background: #0891b2;
+    color: white;
+    font-size: 9pt;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    letter-spacing: 0.05em;
+  }
+
+  .cover-title {
+    font-size: 23pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.28;
+    margin: 0 0 12px 0;
+  }
+
+  .cover-subtitle {
+    font-size: 12pt;
+    color: #475569;
+    margin: 0 0 22px 0;
+    font-weight: 500;
+  }
+
+  .cover-desc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 9.2pt;
+    color: #334155;
+    line-height: 1.65;
+    max-width: 620px;
+  }
+
+  .cover-footer {
+    border-top: 1px solid #cbd5e1;
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.8pt;
+    color: #64748b;
+  }
+
+  /* 共通レイアウト */
+  .page-break {
+    page-break-before: always;
+  }
+
+  h1 {
+    font-size: 13.5pt;
+    font-weight: 700;
+    color: #0f172a;
+    border-bottom: 2px solid #0891b2;
+    padding-bottom: 4px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  h1 .sec-num {
+    background: #0891b2;
+    color: white;
+    font-size: 9.5pt;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 7px;
+  }
+
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1e293b;
+    border-left: 4px solid #0891b2;
+    padding-left: 8px;
+    margin-top: 14px;
+    margin-bottom: 6px;
+  }
+
+  h3 {
+    font-size: 9.8pt;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  p, li {
+    font-size: 9pt;
+    color: #334155;
+  }
+
+  ul, ol {
+    padding-left: 16px;
+    margin: 4px 0 8px 0;
+  }
+
+  li {
+    margin-bottom: 2px;
+  }
+
+  /* テーブル */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 11px 0;
+    font-size: 8.5pt;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 5px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  /* コールアウト・ボックス */
+  .callout-blue {
+    background: #f0f9ff;
+    border-left: 4px solid #0284c7;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin: 8px 0;
+    font-size: 8.8pt;
+  }
+
+  .secret-box {
+    background: #fdf2f8;
+    border-left: 4px solid #db2777;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin: 9px 0;
+    font-size: 8.8pt;
+  }
+
+  .code-block {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-family: Consolas, monospace;
+    font-size: 7.8pt;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 6px 0;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 7.5pt;
+    font-weight: bold;
+  }
+  .pill-cyan { background: #cffafe; color: #0e7490; }
+  .pill-green { background: #dcfce7; color: #15803d; }
+  .pill-amber { background: #fef3c7; color: #b45309; }
+</style>
+</head>
+<body>
+
+<!-- 表紙 -->
+<div class="cover-page">
+  <div class="cover-header">
+    <div class="badge-tag">GALVANIZING QUALITY & KNOWLEDGE TRANSFER SYSTEM</div>
+    <div class="cover-title">溶融亜鉛めっき<br>「技術伝承AIバイブル」<br><span style="font-size: 16pt; color: #0891b2;">システム要件・基本設計 ＆ クラウド完全引継仕様書</span></div>
+    <div class="cover-subtitle">品管特化型 対話式ナレッジ蓄積・AI推論・マルチクラウド構成・運用マニュアル</div>
+    
+    <div class="cover-desc">
+      <strong>【本書の概要】</strong><br>
+      品管担当者（三浦）と大ベテラン職人（村上本部長）の業務負荷をゼロにし、JIS H 8641準拠の200問のめっき品質ノウハウを完全蓄積・伝承するWebアプリケーションの基本設計および完全引継書です。<br>
+      <strong>GitHubリポジトリ (shuji8001-rgb)</strong>、<strong>Vercel (本番: https://galva-tech-bible.vercel.app/)</strong>、<strong>Supabase (PostgreSQL / Media Storage)</strong>、<strong>Google Gemini API</strong>、<strong>専門用語辞書</strong>、<strong>データ同期仕様</strong>、<strong>デプロイ手順</strong>の全情報を網羅しています。
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div><strong>対象システム:</strong> ガルバ興業 / 溶融亜鉛めっき品質管理部門</div>
+    <div><strong>作成日:</strong> 2026年9月13日 &nbsp;|&nbsp; <strong>Ver:</strong> 1.2 (完全引継決定版)</div>
+  </div>
+</div>
+
+<!-- 第1章: システム概要 -->
+<h1><span class="sec-num">1</span> システム概要 & 開発コンセプト</h1>
+
+<h2>1.1 開発の背景と目的</h2>
+<p>溶融亜鉛めっき工場における品質管理・不具合対応は、熟練職人（村上本部長）の経験と感覚に依存しており、暗黙知のブラックボックス化が課題となっていました。若手・中堅（三浦さん）が現場で疑問を持っても、多忙な職人に気兼ねして質問できなかったり、口頭で教わったノウハウが記録に残らないという問題を、<strong>「AIインタビュー ＋ 専用誤変換辞書」</strong>により完全解決します。</p>
+
+<div class="callout-blue">
+  <strong>🎯 コア運用フロー（負荷ゼロ設計）</strong>
+  <ul>
+    <li><strong>三浦さん（質問側）:</strong> 現場の気になる事象をスマホでメモ（「パイプの先が黒ずんでる」等の殴り書き）や写真添付で投稿。AIが職人向けに具体的・論理的な質問へ自動リライト。</li>
+    <li><strong>村上本部長（回答側）:</strong> 「🔊 質問を聞いて回答する」ボタンを1タップ。スマホが質問をAI音声で読み上げ、自動起動したマイクに向かって口頭で喋るだけ。</li>
+    <li><strong>Gemini 1.5 Flash（自動構造化）:</strong> 現場用語辞書（リラックス➔フラックス等）を参照しながら自動補正し、【現象・原因・処置合否基準・再発防止策】に構造化してDB保存。</li>
+  </ul>
+</div>
+
+<h2>1.2 システム構成（アーキテクチャ）</h2>
+<div class="code-block">[Webアプリケーション本体 (Vercel 本番稼働: https://galva-tech-bible.vercel.app/)]
+  ├─ フロントエンド: Next.js 14 App Router / Tailwind CSS / Lucide Icons
+  │    ├─ 📖 品質バイブル (2ペイン構成: 質問投稿 & 200問インデックス ↔ インタビュー & バイブルカード)
+  │    ├─ 📊 品質分析ダッシュボード (カテゴリ別達成度レーダーチャート / 不具合頻度 / AI品質傾向分析)
+  │    ├─ 👷 現場作業員クイック要約ビュー (合否判定・処置手順に特化した現場特化カード)
+  │    └─ 🎨 カラースタイル濃淡設定 (ジンク・シアン・アンバー・エメラルド・モノトーン 5種切替)
+  └─ サーバーレスバックエンド (API Routes)
+       ├─ POST /api/refine-question (質問自動具体化・リライト)
+       ├─ POST /api/process-knowledge (音声マルチモーダル構造化解析)
+       └─ GET/POST /api/tts (音声合成ストリーミング)
+         │ HTTPS
+[外部クラウド & BaaS (Supabase ＆ Google AI)]
+  ├─ データベース / ストレージ: Supabase (PostgreSQL DB & Media Storage)
+  └─ AI推論エンジン: Google Gemini 1.5 Flash / Pro API (Google AI Studio)</div>
+
+<!-- 第2章: 外部サービス・クラウド引継ぎ情報 -->
+<div class="page-break"></div>
+<h1><span class="sec-num">2</span> 外部クラウド・第三者サービス引継ぎ台帳（完全網羅）</h1>
+
+<div class="secret-box">
+  <strong>🔒 重要：本章にはシステムの運用・保守に必要なクラウド接続情報および機密キーが含まれます。</strong>
+</div>
+
+<h2>2.1 GitHub リポジトリ（ソースコード管理）</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">設定項目</th>
+      <th>設定値 / 接続情報</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>プライマリ リポジトリ</strong></td>
+      <td><a href="https://github.com/shuji8001-rgb/galva-ai-bible.git" target="_blank" style="color: #0284c7; font-weight: bold;">https://github.com/shuji8001-rgb/galva-ai-bible.git</a></td>
+    </tr>
+    <tr>
+      <td><strong>セカンダリ リポジトリ</strong></td>
+      <td><a href="https://github.com/shuji8001-rgb/galva-ai-bible2.git" target="_blank">https://github.com/shuji8001-rgb/galva-ai-bible2.git</a></td>
+    </tr>
+    <tr>
+      <td><strong>アカウント名</strong></td>
+      <td><code>shuji8001-rgb</code></td>
+    </tr>
+    <tr>
+      <td><strong>本番デプロイ対象ブランチ</strong></td>
+      <td><strong><code>main</code> ブランチ</strong>（※ <code>master</code> へのプッシュでは本番ビルドが起動しないため、必ず <code>main</code> へマージしてプッシュすること）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2.2 Webアプリケーション本体: Vercel（Next.js ホスティング）</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">設定項目</th>
+      <th>設定値 / 接続情報</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>本番公開URL</strong></td>
+      <td><a href="https://galva-tech-bible.vercel.app/" target="_blank" style="color: #0284c7; font-weight: bold;">https://galva-tech-bible.vercel.app/</a></td>
+    </tr>
+    <tr>
+      <td><strong>ホスティング基盤</strong></td>
+      <td>Vercel (Next.js 14 App Router / CI/CD 自動デプロイ)</td>
+    </tr>
+    <tr>
+      <td><strong>プロジェクト名</strong></td>
+      <td><code>galva-tech-bible</code></td>
+    </tr>
+    <tr>
+      <td><strong>Vercel 管理URL</strong></td>
+      <td><a href="https://vercel.com/dashboard" target="_blank">https://vercel.com/dashboard</a></td>
+    </tr>
+    <tr>
+      <td><strong>ビルド & 実行コマンド</strong></td>
+      <td>Build: <code>npm run build</code> &nbsp;|&nbsp; Install: <code>npm install</code></td>
+    </tr>
+    <tr>
+      <td><strong>登録環境変数<br>(Environment Variables)</strong></td>
+      <td>
+        ・<code>NEXT_PUBLIC_SUPABASE_URL</code> = <code>https://vdyhsqiqngukimuqulmb.supabase.co</code><br>
+        ・<code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> = <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code><br>
+        ・<code>GEMINI_API_KEY</code> = <code>AIzaSy...</code> (Google AI Studioより発行)
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2.3 データベース / ストレージ: Supabase（BaaS）</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">設定項目</th>
+      <th>設定値 / 接続情報</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>プロジェクトURL</strong></td>
+      <td><code>https://vdyhsqiqngukimuqulmb.supabase.co</code></td>
+    </tr>
+    <tr>
+      <td><strong>Project Ref ID</strong></td>
+      <td><code>vdyhsqiqngukimuqulmb</code></td>
+    </tr>
+    <tr>
+      <td><strong>管理ダッシュボード</strong></td>
+      <td><a href="https://supabase.com/dashboard/project/vdyhsqiqngukimuqulmb" target="_blank">https://supabase.com/dashboard/project/vdyhsqiqngukimuqulmb</a></td>
+    </tr>
+    <tr>
+      <td><strong>Anon Key (公開APIキー)</strong></td>
+      <td><div class="code-block" style="margin:0;">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkeWhzcWlxbmd1a2ltdXF1bG1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMDY5OTEsImV4cCI6MjEwNDc4Mjk5MX0.fl3EJ4hdjuylGgYmO2JG8_NHwX0umFA4hKw6n-PpGh4</div></td>
+    </tr>
+    <tr>
+      <td><strong>Storage Bucket</strong></td>
+      <td><code>knowledge-media</code> (Public設定: 本部長の肉声録音Blobおよび現場写真の保管)</td>
+    </tr>
+    <tr>
+      <td><strong>主要DBテーブル</strong></td>
+      <td>
+        ・<code>questions_queue</code>（200問の質問キュー・進捗管理）<br>
+        ・<code>knowledge_records</code>（蓄積されたQA・音声URL・合否基準）
+      </td>
+    </tr>
+    <tr>
+      <td><strong>データ同期設計</strong></td>
+      <td><code>lib/storage.ts</code> にてブラウザLocalStorageとSupabaseの双方向自動同期を実装。オフライン時もローカルキャッシュで全機能が動作可能。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>2.4 AI推論エンジン: Google Gemini API（Google AI Studio）</h2>
+<table>
+  <thead>
+    <tr>
+      <th style="width: 25%;">設定項目</th>
+      <th>設定値 / 運用仕様</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>AI Studio 管理URL</strong></td>
+      <td><a href="https://aistudio.google.com/" target="_blank">https://aistudio.google.com/</a></td>
+    </tr>
+    <tr>
+      <td><strong>推奨利用モデル</strong></td>
+      <td>
+        ・<code>gemini-1.5-flash</code>: 標準稼働（音声マルチモーダル高速解析 & 質問リライト）<br>
+        ・<code>gemini-1.5-pro</code>: 最上位思考（冶金学・Fe-Zn相互拡散の厳密工学解析）<br>
+        ・<code>gemini-2.0-flash</code>: 次世代超高速推論
+      </td>
+    </tr>
+    <tr>
+      <td><strong>APIキー設定方法</strong></td>
+      <td>1. サーバー側環境変数 (<code>.env.local</code> / Vercel Environment Variables)<br>2. ブラウザ個別設定: ヘッダー「AI設定」モーダルから入力（LocalStorage保持）</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 第3章: 4視点ペルソナ & 機能仕様 -->
+<div class="page-break"></div>
+<h1><span class="sec-num">3</span> 4視点ペルソナ & 画面機能仕様</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 22%;">利用ロール</th>
+      <th style="width: 25%;">主要画面</th>
+      <th>機能とユーザー体験</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>① 三浦さん<br>(品管担当・質問側)</strong></td>
+      <td>左ペイン:<br>質問投稿フォーム &<br>200問アコーディオン</td>
+      <td>・殴り書きテキスト入力 ＋ 現場写真登録。<br>・「質問をAIで具体化」押下でプロ品質の質問へ自動昇華。<br>・既存200問との類似度チェックによる重複質問防止。</td>
+    </tr>
+    <tr>
+      <td><strong>② 村上本部長<br>(大ベテラン・回答側)</strong></td>
+      <td>右ペイン:<br>AIインタビュー<br>ワークスペース</td>
+      <td>・「🔊 質問を聞いて回答する」巨大ボタン1タップ。<br>・AI音声読上げ終了後、マイク自動録音スタート。<br>・話してタップするだけで自動構造化＆肉声保存。</td>
+    </tr>
+    <tr>
+      <td><strong>③ 工場長・品質管理者<br>(全体統括)</strong></td>
+      <td>中央タブ:<br>📊 品質分析<br>ダッシュボード</td>
+      <td>・200問の音声収録進捗率メーター（👑マーク）。<br>・CAT-1〜CAT-6のカテゴリ別蓄積度レーダーチャート。<br>・頻出欠陥（不めっき・ヤケ・ドロス）のAI分析レポート。</td>
+    </tr>
+    <tr>
+      <td><strong>④ 一般作業員・外国人<br>(現場荷受け・仕上げ)</strong></td>
+      <td>中央タブ:<br>👷 現場作業員<br>クイック要約ビュー</td>
+      <td>・難しい理屈を省き「処置手順」「手直し基準」のみを強調。<br>・写真＋大きな合否バッジによる直感的な確認。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>3.1 200問インデックスのカテゴリ構成 (JIS H 8641準拠)</h2>
+<ul>
+  <li><span class="pill pill-cyan">CAT-1</span> <strong>前処理・薬品管理 (No.1〜35):</strong> 脱脂、酸洗、水洗、フラックス、鉄分濃度管理</li>
+  <li><span class="pill pill-cyan">CAT-2</span> <strong>めっき浴・浸漬作業 (No.36〜70):</strong> 浴温（445℃〜450℃）、アルミ/ビスマス添加、ドロス管理、灰払い、引上速度</li>
+  <li><span class="pill pill-cyan">CAT-3</span> <strong>後処理・冷却・防錆 (No.71〜105):</strong> 水冷、温水洗浄、空冷、クロメート/ノンクロメート処理、白サビ対策</li>
+  <li><span class="pill pill-cyan">CAT-4</span> <strong>外観欠陥・手直し基準 (No.106〜140):</strong> 不めっき、ヤケ、光沢ムラ、タレ、ツララ、ザラ肌、LME割れ</li>
+  <li><span class="pill pill-cyan">CAT-5</span> <strong>膜厚・試験・JIS規格 (No.141〜175):</strong> HDZ35/45/55、電磁式膜厚計5点平均、密着性・硫酸銅試験</li>
+  <li><span class="pill pill-cyan">CAT-6</span> <strong>再処理・特殊形状・安全 (No.176〜200):</strong> 閉鎖断面・空気抜き孔（水蒸気爆発防止）、酸剥離、ジンクリッチ補修</li>
+</ul>
+
+<h2>3.2 5つの厳選 濃淡カラースタイル（設定画面で切替可能）</h2>
+<ul>
+  <li>🪙 <strong>ジンク・メタルシルバー (推奨):</strong> 溶融亜鉛の金属光沢とスパングルを表現。クールな銀灰色とスカイブルーの濃淡。</li>
+  <li>🌊 <strong>ディープ・シアン:</strong> 漆黒ネイビーと氷光シアン。コントラストが高く視認性に優れた濃淡。</li>
+  <li>⚡ <strong>インダストリアル・アンバー:</strong> 亜鉛浴の熱量と工場の安全灯。漆黒カーボンと琥珀色の重厚な濃淡。</li>
+  <li>🌲 <strong>フォレスト・エメラルド:</strong> 深緑のダークスレートと鮮やかなエメラルド。JIS品質・信頼の濃淡。</li>
+  <li>🌌 <strong>オブシディアン・モノトーン:</strong> 黒・白・プラチナ灰の濃淡のみで構成された極上ミニマル。</li>
+</ul>
+
+<!-- 第4章: 辞書定義 & 誤変換ルール -->
+<div class="page-break"></div>
+<h1><span class="sec-num">4</span> めっき現場特有 誤変換辞書ルール</h1>
+
+<p>Gemini APIのシステムプロンプト（<code>constants/terminology.ts</code>, <code>lib/terminologyReplacer.ts</code>）に以下の完全辞書を注入し、現場の騒音下での音声認識精度を極限まで高めています。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="width: 45%;">認識されやすい誤音・誤変換パターン</th>
+      <th>AIが自動補正する【正式専門用語】</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>リラックス、ふらつく、フラック、フラックス液</td><td><strong>フラックス</strong>（助剤・塩化アンモニウム亜鉛）</td></tr>
+    <tr><td>踏歴、不明機、ふめっき、目利き、フメッキ</td><td><strong>不めっき</strong>（地肌露出欠陥・スケール残り）</td></tr>
+    <tr><td>参戦、温泉、感染、三線、三千</td><td><strong>酸洗</strong>（塩酸・硫酸による黒皮除去洗浄）</td></tr>
+    <tr><td>泥巣、ドレス、泥ス、ドロす</td><td><strong>ドロス</strong>（鉄亜鉛合金の沈殿・浮遊カス）</td></tr>
+    <tr><td>人吉、信金率、前屈一致、ジンクリ</td><td><strong>ジンクリッチ</strong>（JIS K 5553 高濃度亜鉛末塗料）</td></tr>
+    <tr><td>サンドイッチ現象、三輪現象、三度リン</td><td><strong>サンドリン現象</strong>（Si起因の超厚膜・灰色ヤケ）</td></tr>
+    <tr><td>白錆、白波、白壁、シロサビ</td><td><strong>白サビ</strong>（初期の塩基性炭酸亜鉛・酸化亜鉛）</td></tr>
+    <tr><td>つらら、つら、吊ら、氷柱</td><td><strong>ツララ</strong>（引き上げ時に固まった亜鉛の滴）</td></tr>
+    <tr><td>ガラ掛け、からかけ、柄掛け</td><td><strong>ガラ掛け</strong>（ボルト・小物の遠心脱水めっき）</td></tr>
+    <tr><td>ミルスケ、見る助、見過ごす</td><td><strong>ミルスケール</strong>（熱間圧延時の黒皮）</td></tr>
+    <tr><td>エルエムイー、エルエム割れ</td><td><strong>LME割れ</strong>（液体金属脆化割れ）</td></tr>
+    <tr><td>ダブルディップ、二度漬け</td><td><strong>ダブルディップ</strong>（大型構造物の分割浸漬）</td></tr>
+    <tr><td>リンギ、臨時、リンス</td><td><strong>リンギ</strong>（製品接触を防ぐ木製スペーサー）</td></tr>
+    <tr><td>ハイ、灰、廃、トップ泥</td><td><strong>酸化亜鉛灰</strong>（トップドロス）</td></tr>
+  </tbody>
+</table>
+
+<!-- 第5章: 運用保守・デプロイ手順 -->
+<div class="page-break"></div>
+<h1><span class="sec-num">5</span> システム運用保守 ＆ デプロイ手順</h1>
+
+<h2>5.1 ローカル開発・起動手順</h2>
+<ol>
+  <li><strong>起動バッチ:</strong> プロジェクト直下の <code>1_起動.bat</code> をダブルクリック。</li>
+  <li><strong>手動コマンド:</strong> ターミナルで <code>cd c:\Users\MNHPC2510u\Antigravity\ガルバ</code> ➔ <code>npm run dev</code> を実行。</li>
+  <li><strong>アクセス:</strong> ブラウザで <code>http://localhost:3000</code> を開く。</li>
+</ol>
+
+<h2>5.2 本番リリース・デプロイ手順（完全自動化）</h2>
+<p>以下のコマンドを実行すると、GitHub経由でVercelへ自動デプロイされ、本番URLへ即時反映されます。</p>
+<div class="code-block"># 1. 型チェック検証
+npx tsc --noEmit
+
+# 2. 変更コミット
+git add -A
+git commit -m "feat: [更新内容]"
+
+# 3. 本番 main ブランチへ反映＆プッシュ (Vercel CI/CD起動)
+git checkout main
+git merge master
+git push origin main
+git push origin master
+git push origin2 main
+git push origin2 master</div>
+
+<h2>5.3 データベーススキーマ定義 (PostgreSQL)</h2>
+<div class="code-block">-- 1. 質問キューテーブル (questions_queue)
+CREATE TABLE IF NOT EXISTS questions_queue (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    category_id VARCHAR(50) NOT NULL,        -- 'CAT-1'〜'CAT-6'
+    question_no INTEGER NOT NULL,             -- 1〜200
+    title TEXT NOT NULL,                     -- 質問タイトル
+    question_text TEXT NOT NULL,              -- 具体的質問本文 (AIリライト後)
+    raw_prompt TEXT,                         -- 三浦さんの初期入力テキスト
+    photos TEXT[],                           -- 現場写真URL配列
+    is_answered BOOLEAN DEFAULT FALSE,       -- 回答済みフラグ
+    has_voice_answer BOOLEAN DEFAULT FALSE,  -- 本部長音声回答有無
+    knowledge_id UUID,                       -- 紐づくナレッジID
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. ナレッジ蓄積テーブル (knowledge_records)
+CREATE TABLE IF NOT EXISTS knowledge_records (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    question_id UUID REFERENCES questions_queue(id) ON DELETE CASCADE,
+    title TEXT NOT NULL,                     -- 質問タイトル
+    category_id VARCHAR(50) NOT NULL,        -- 'CAT-1'〜'CAT-6'
+    question_no INTEGER NOT NULL,
+    phenomenon TEXT NOT NULL,                -- 【現象】
+    cause TEXT NOT NULL,                     -- 【原因】
+    treatment TEXT NOT NULL,                 -- 【処置・合否判定基準】
+    prevention TEXT NOT NULL,                -- 【再発防止策】
+    raw_transcript TEXT,                     -- 文字起こし全文
+    audio_url TEXT,                          -- 本部長肉声録音URL (Supabase Storage)
+    photos TEXT[],                           -- 写真URL配列
+    has_voice_answer BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. インデックス作成
+CREATE INDEX IF NOT EXISTS idx_questions_cat ON questions_queue(category_id);
+CREATE INDEX IF NOT EXISTS idx_questions_no ON questions_queue(question_no);
+CREATE INDEX IF NOT EXISTS idx_knowledge_qid ON knowledge_records(question_id);</div>
+
+</body>
+</html>

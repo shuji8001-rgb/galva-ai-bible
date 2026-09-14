@@ -11,10 +11,12 @@ import {
   HardHat,
   HelpCircle,
   Settings,
+  QrCode,
 } from 'lucide-react';
 import { QuestionQueueItem, KnowledgeRecord } from '@/types';
 import { ManualPersona } from '@/components/ManualModal';
 import { AiSettingsModal } from '@/components/AiSettingsModal';
+import { QrModal } from '@/components/QrModal';
 
 export type MainViewMode = 'BIBLE' | 'ANALYTICS' | 'WORKER_SUMMARY';
 
@@ -36,6 +38,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenManual,
 }) => {
   const [isAiSettingsOpen, setIsAiSettingsOpen] = useState(false);
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false);
 
   const voiceAnsweredCount = questions.filter((q) => q.has_voice_answer).length;
   const totalCount = questions.length;
@@ -73,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* モバイル用クイック操作ボタン */}
+            {/* モバイル用クイック操作ボタン（※QRボタンは設置しない） */}
             <div className="flex items-center gap-1.5 xl:hidden">
               <button
                 onClick={() => setIsAiSettingsOpen(true)}
@@ -171,8 +174,18 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* PC用操作ボタン群 */}
+            {/* PC用操作ボタン群（スマホ非表示） */}
             <div className="hidden xl:flex items-center gap-2">
+              {/* 📱 QR表示ボタン */}
+              <button
+                onClick={() => setIsQrModalOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:from-cyan-600/45 hover:to-blue-600/45 border border-cyan-400/60 text-cyan-300 text-xs font-bold transition-all shadow-md shadow-cyan-950/50 hover:shadow-cyan-500/20 active:scale-95"
+                title="スマホ連携用 QRコードを表示"
+              >
+                <QrCode className="w-3.5 h-3.5 text-cyan-300" />
+                <span>QR表示</span>
+              </button>
+
               <button
                 onClick={() => setIsAiSettingsOpen(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-cyan-300 text-xs font-bold transition-all shadow-sm active:scale-95"
@@ -215,6 +228,14 @@ export const Header: React.FC<HeaderProps> = ({
 
         </div>
       </header>
+
+      {/* 📱 スマホ連携用 QRコードモーダル */}
+      <QrModal
+        isOpen={isQrModalOpen}
+        onClose={() => setIsQrModalOpen(false)}
+        title="溶融亜鉛めっき「技術伝承AIバイブル」"
+        defaultUrl="https://galva-tech-bible.vercel.app/"
+      />
 
       {/* AI知能モデル＆API設定モーダル */}
       <AiSettingsModal
