@@ -76,8 +76,8 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* モバイル用クイック操作ボタン（※QRボタンは設置しない） */}
-            <div className="flex items-center gap-1.5 xl:hidden">
+            {/* モバイル用クイック操作ボタン（※スマホ時は自動非表示） */}
+            <div className="flex items-center gap-1.5 md:hidden">
               <button
                 onClick={() => setIsAiSettingsOpen(true)}
                 className="p-1.5 rounded-lg bg-cyan-950/80 border border-cyan-500/50 text-cyan-300"
@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center justify-between sm:justify-center bg-slate-900/90 p-1 rounded-xl border border-slate-800 text-xs shadow-inner shrink-0">
             <button
               onClick={() => onChangeView('BIBLE')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
                 activeView === 'BIBLE'
                   ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md'
                   : 'text-slate-400 hover:text-slate-200'
@@ -130,7 +130,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => onChangeView('ANALYTICS')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
                 activeView === 'ANALYTICS'
                   ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md'
                   : 'text-slate-400 hover:text-slate-200'
@@ -142,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => onChangeView('WORKER_SUMMARY')}
-              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
                 activeView === 'WORKER_SUMMARY'
                   ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 shadow-md font-extrabold'
                   : 'text-amber-400/90 hover:text-amber-300'
@@ -153,10 +153,10 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </div>
 
-          {/* 右側：本部長肉声メーター ＆ 操作ボタン群（PC時） */}
-          <div className="flex items-center justify-between xl:justify-end gap-3 shrink-0">
+          {/* 右側：本部長肉声メーター ＆ 操作ボタン群（PC・タブレット表示） */}
+          <div className="flex items-center justify-between md:justify-end gap-2 shrink-0">
             {/* 収録進捗バー */}
-            <div className="flex flex-col min-w-[130px] sm:min-w-[150px] bg-slate-900/90 xl:bg-transparent p-1 xl:p-0 rounded-lg border xl:border-none border-slate-800">
+            <div className="hidden lg:flex flex-col min-w-[130px] sm:min-w-[140px] bg-slate-900/90 md:bg-transparent p-1 md:p-0 rounded-lg border md:border-none border-slate-800">
               <div className="flex justify-between text-[10px] sm:text-[11px] font-bold text-slate-300">
                 <span className="flex items-center gap-1 text-amber-400">
                   <span>👑 本部長音声</span>
@@ -174,15 +174,15 @@ export const Header: React.FC<HeaderProps> = ({
               </div>
             </div>
 
-            {/* PC用操作ボタン群（スマホ非表示） */}
-            <div className="hidden xl:flex items-center gap-2">
-              {/* 📱 QR表示ボタン */}
+            {/* PC・タブレット用操作ボタン群 */}
+            <div className="hidden md:flex items-center gap-2">
+              {/* 📱 QR表示ボタン（高視認性デザイン） */}
               <button
                 onClick={() => setIsQrModalOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600/30 to-blue-600/30 hover:from-cyan-600/45 hover:to-blue-600/45 border border-cyan-400/60 text-cyan-300 text-xs font-bold transition-all shadow-md shadow-cyan-950/50 hover:shadow-cyan-500/20 active:scale-95"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/25 to-blue-600/25 hover:from-cyan-500/40 hover:to-blue-600/40 border border-cyan-400/60 text-cyan-300 text-xs font-bold transition-all shadow-md shadow-cyan-950/50 hover:shadow-cyan-500/20 active:scale-95"
                 title="スマホ連携用 QRコードを表示"
               >
-                <QrCode className="w-3.5 h-3.5 text-cyan-300" />
+                <QrCode className="w-3.5 h-3.5 text-cyan-300 animate-pulse" />
                 <span>QR表示</span>
               </button>
 
