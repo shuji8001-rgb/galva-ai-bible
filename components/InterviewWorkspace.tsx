@@ -114,16 +114,42 @@ export const InterviewWorkspace: React.FC<InterviewWorkspaceProps> = ({
       utterance.rate = 1.05;
       utterance.pitch = 1.0;
 
-      utterance.onend = () => {
+      let timerStarted = false;
+      let keepAliveInterval: NodeJS.Timeout | null = null;
+      let watchdogTimer: NodeJS.Timeout | null = null;
+
+      const cleanupAndProceed = () => {
+        if (timerStarted) return;
+        timerStarted = true;
+        if (keepAliveInterval) clearInterval(keepAliveInterval);
+        if (watchdogTimer) clearTimeout(watchdogTimer);
         startRecording();
+      };
+
+      // 🛡️ Keep-Alive & Watchdog (最大8秒または文字数に応じた安全タイムアウトで確実にマイク起動へ移行)
+      const timeoutMs = Math.max(6000, speechPrompt.length * 400 + 2000);
+      watchdogTimer = setTimeout(cleanupAndProceed, timeoutMs);
+
+      keepAliveInterval = setInterval(() => {
+        if (window.speechSynthesis && window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }, 4000);
+
+      utterance.onend = () => {
+        cleanupAndProceed();
       };
 
       utterance.onerror = (e) => {
         console.warn('Speech synthesis error, starting mic directly:', e);
-        startRecording();
+        cleanupAndProceed();
       };
 
       window.speechSynthesis.speak(utterance);
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
     } else {
       startRecording();
     }
